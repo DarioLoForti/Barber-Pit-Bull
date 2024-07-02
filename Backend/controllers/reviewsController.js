@@ -11,6 +11,7 @@ const store = async (req, res) => {
     rating: typeof rating === "number" ? rating : parseInt(rating),
     comment,
     userId: req.user.id,
+    userName: req.user.name,
   };
 
   try {
