@@ -36,7 +36,7 @@ model Admin {
 model Review {
   id        Int      @id @default(autoincrement())
   rating    Int      @default(1)
-  comment   String
+  comment   String   @db.Text
   userId    Int
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
