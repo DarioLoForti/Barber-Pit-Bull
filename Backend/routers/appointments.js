@@ -13,14 +13,13 @@ const { paramID } = require("../validations/id.js");
 const bodyData = require("../validations/appointments.js");
 const dateParser = require("../middlewares/dateParser.js");
 const authenticateToken = require("../middlewares/auth.js");
+router.use(authenticateToken);
 
 router.get("/", index);
 
 router.use("/:id", validator(paramID));
 
 router.get("/:id", show);
-
-router.use(authenticateToken);
 
 router.post("/", dateParser, validator(bodyData), create);
 

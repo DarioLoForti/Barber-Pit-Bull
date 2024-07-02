@@ -5,13 +5,8 @@ const prisma = new PrismaClient();
 require("dotenv").config();
 
 const create = async (req, res) => {
-  const { date, status, service } = req.body;
+  const { date, status, services } = req.body;
 
-  if (!Array.isArray(service)) {
-    return res.status(400).json({
-      error: "I servizi devono essere un array di id.",
-    });
-  }
   const parsedDate = new Date(date.split("/").reverse().join("-"));
 
   const data = {
@@ -19,7 +14,7 @@ const create = async (req, res) => {
     status,
     userId: req.user.id,
     services: {
-      connect: service.map((id) => ({ id })),
+      connect: services.map((id) => ({ id })),
     },
   };
 
@@ -68,14 +63,14 @@ const show = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const { date, status, serviceIds } = req.body;
+  const { date, status, services } = req.body;
   const id = parseInt(req.params.id);
 
   const data = {
     date: new Date(date),
     status,
     services: {
-      set: serviceIds.map((id) => ({ id })),
+      set: services.map((id) => ({ id })),
     },
   };
 

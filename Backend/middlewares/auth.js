@@ -1,20 +1,21 @@
-const RestError = require("../utils/restError");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+const RestError = require("../utils/restError.js");
 
-module.exports = (req, res, next) => {
-  const authHeader = req.headers.authorization;
+const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
-    throw new RestError("Token non fornito", 401);
+    return res.status(401).json({ error: "Accesso negato, token mancante." }); // Unauthorized
   }
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, data) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
-      throw new RestError("Token non valido", 401);
+      return res.status(403).json({ error: "Token non valido." }); // Forbidden
     }
-    req.user = data;
+    req.user = user;
     next();
   });
 };
+
+module.exports = authenticateToken;
