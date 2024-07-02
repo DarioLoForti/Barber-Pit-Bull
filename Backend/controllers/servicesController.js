@@ -73,8 +73,8 @@ const update = async (req, res) => {
     const data = {
       name,
       description,
-      price: parseFloat(price),
-      duration,
+      price: price,
+      duration: typeof "string" ? parseInt(duration) : duration,
     };
 
     if (req.file) {
