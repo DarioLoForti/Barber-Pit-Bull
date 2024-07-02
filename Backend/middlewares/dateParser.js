@@ -2,22 +2,25 @@
 const moment = require("moment");
 
 module.exports = (req, res, next) => {
-  const { date } = req.body;
+  const { datetime } = req.body;
 
-  // Se la data è presente nel corpo della richiesta e è una stringa, analizzala con moment.js
-  if (date && typeof date === "string") {
-    // Analizza la data in formato italiano (dd/MM/yyyy)
-    const parsedDate = moment(date, "DD/MM/YYYY", true);
+  // Se datetime è presente nel corpo della richiesta e è una stringa, analizzala con moment.js
+  if (datetime && typeof datetime === "string") {
+    // Analizza la data e ora in formato italiano (dd/MM/yyyy HH:mm)
+    const parsedDatetime = moment(datetime, "DD/MM/YYYY HH:mm", true);
 
     // Verifica se la data è valida secondo il formato specificato
-    if (!parsedDate.isValid()) {
+    if (!parsedDatetime.isValid()) {
       return res
         .status(400)
-        .json({ error: "La data non è nel formato corretto (dd/MM/yyyy)." });
+        .json({
+          error:
+            "La data e l'ora non sono nel formato corretto (dd/MM/yyyy HH:mm).",
+        });
     }
 
-    // Sovrascrivi la data nel corpo della richiesta con l'oggetto Moment
-    req.body.date = parsedDate.toDate();
+    // Sovrascrivi datetime nel corpo della richiesta con l'oggetto Date
+    req.body.datetime = parsedDatetime.toDate();
   }
 
   // Prosegui con la catena dei middleware

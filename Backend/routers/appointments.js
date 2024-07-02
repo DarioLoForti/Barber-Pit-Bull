@@ -6,6 +6,7 @@ const {
   show,
   update,
   destroy,
+  getAvailability,
 } = require("../controllers/appointmentsController.js");
 
 const validator = require("../middlewares/validator.js");
@@ -13,7 +14,11 @@ const { paramID } = require("../validations/id.js");
 const bodyData = require("../validations/appointments.js");
 const dateParser = require("../middlewares/dateParser.js");
 const authenticateToken = require("../middlewares/auth.js");
+const { paramAvailability } = require("../validations/availability.js");
+
 router.use(authenticateToken);
+
+router.get("/availability", paramAvailability, getAvailability);
 
 router.get("/", index);
 
