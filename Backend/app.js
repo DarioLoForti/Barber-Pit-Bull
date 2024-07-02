@@ -4,6 +4,7 @@ const cors = require("cors");
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
 const authRouter = require("./routers/auth");
+const servicesRouter = require("./routers/services");
 
 require("dotenv").config();
 const { PORT, HOST } = process.env;
@@ -15,6 +16,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRouter);
+
+app.use("/services", servicesRouter);
 
 app.use(notFound);
 app.use(errorHandler);

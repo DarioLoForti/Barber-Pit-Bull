@@ -46,10 +46,10 @@ model Review {
 model Service {
   id           Int           @id @default(autoincrement())
   name         String
-  description  String
+  description  String        @db.Text
   price        Float
   duration     Int?
-  imageUrl     String?
+  imageService String?
   appointments Appointment[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
