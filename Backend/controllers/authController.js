@@ -32,6 +32,7 @@ const register = async (req, res, next) => {
     const token = generateToken({
       email: user.email,
       name: user.name,
+      id: user.id,
     });
 
     delete user.id;
@@ -68,6 +69,7 @@ const login = async (req, res) => {
     const token = generateToken({
       email: user.email,
       name: user.name,
+      id: user.id,
     });
 
     delete user.id;

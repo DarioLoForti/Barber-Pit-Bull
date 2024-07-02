@@ -31,6 +31,7 @@ const bodyData = {
       options: { min: 5 },
     },
   },
+
   price: {
     in: ["body"],
     notEmpty: {
@@ -42,16 +43,12 @@ const bodyData = {
     },
     toFloat: true,
   },
+
   duration: {
     in: ["body"],
-    notEmpty: {
-      errorMessage: "La durata del servizio è obbligatoria.",
-      bail: true,
-    },
     isNumber: {
       errorMessage: "La durata del servizio deve essere un numero.",
     },
-    toNumber: true,
   },
 };
 
