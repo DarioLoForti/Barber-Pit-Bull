@@ -6,6 +6,7 @@ const errorHandler = require("./middlewares/errorHandler");
 const authRouter = require("./routers/auth");
 const servicesRouter = require("./routers/services");
 const reviewsRouter = require("./routers/reviews");
+const appoinmentsRouter = require("./routers/appointments");
 
 require("dotenv").config();
 const { PORT, HOST } = process.env;
@@ -21,6 +22,8 @@ app.use("/auth", authRouter);
 app.use("/services", servicesRouter);
 
 app.use("/reviews", reviewsRouter);
+
+app.use("/appointments", appoinmentsRouter);
 
 app.use(notFound);
 app.use(errorHandler);

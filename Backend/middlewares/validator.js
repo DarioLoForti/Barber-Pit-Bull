@@ -3,7 +3,7 @@ const deleteImage = require("../utils/deleteImage");
 
 module.exports = (schema) => {
   return [
-    checkSchema(schema),
+    checkSchema(schema || {}), // Assicura che schema non sia undefined
     (req, res, next) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
