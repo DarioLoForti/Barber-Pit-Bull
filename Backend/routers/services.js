@@ -13,7 +13,7 @@ const { bodyData } = require("../validations/services");
 const multer = require("multer");
 const path = require("path");
 
-const storege = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: "public/imageService",
   filename: (req, file, cb) => {
     const fileType = path.extname(file.originalname);
@@ -21,7 +21,7 @@ const storege = multer.diskStorage({
   },
 });
 
-const upload = multer({ storege });
+const upload = multer({ storage });
 
 router.post("/", [upload.single("imageService"), validator(bodyData)], store);
 

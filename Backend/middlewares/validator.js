@@ -11,12 +11,14 @@ module.exports = (schema) => {
         let folder;
         if (req.url.includes("users")) {
           folder = "imageUrl";
-        } else if (req.url.includes("admins")) {
+        } else if (req.url.includes("admin")) {
           folder = "imageUrl";
         } else if (req.url.includes("services")) {
           folder = "imageService";
-        } else {
-          folder = "uploads";
+        } else if (req.url.includes("worcks")) {
+          folder = "imageWork";
+        } else if (req.url.includes("certificates")) {
+          folder = "imageCert";
         }
 
         // Delete the uploaded image if validation fails

@@ -40,9 +40,6 @@ const index = async (req, res) => {
     const services = await prisma.service.findMany();
     res.json({ data: services });
   } catch (err) {
-    if (req.file) {
-      deleteImage("imageService", req.file.filename);
-    }
     errorHandler(err, req, res);
   }
 };
