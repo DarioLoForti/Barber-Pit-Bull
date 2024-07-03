@@ -119,22 +119,61 @@ form{
 }
 
 .register-container{
+
+    .top-form{
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+        align-items: center;
+        padding: 20px;
+        input{
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        h1{
+            text-align: center;
+        }
+    }
+    .main-form{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 1rem;
+        padding: 20px;
+        input{
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    }
+    .buttom-form{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        padding: 20px;
+        input{
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    }
+    button{
+        padding: 10px;
+        background-color: #3333337c;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
     
-  min-height: 100vh;
-  padding-top: 100px;
-  background-color: black;
-  color: white;
-  h1{
-      text-align: center;
-      padding-bottom: 20px;
-  
-  }
   form{
       border: 1px solid #ccc;
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.664);
       margin: auto;
-      width: 300px;
+      width: 80%;
   }
 }
 
