@@ -8,10 +8,8 @@
 }
 
 header{
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background-color:black;
+    display: flex ;
+    justify-content: center;
   color: white;
   padding: 20PX;
   menu{

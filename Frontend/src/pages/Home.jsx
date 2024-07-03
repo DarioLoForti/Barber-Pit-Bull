@@ -42,11 +42,19 @@ export default function(){
 
         {photos ? <Slider photos={photos} /> : <p>Loading photos...</p>}
         </div> */}
-        <div className="homepage">
+        {/* <div className="homepage">
 
         <h1>Benvenuti !!!</h1>
 
 
+        </div> */}
+
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <h1 className="text-center">Benvenuti !!!</h1>
+                </div>
+            </div>
         </div>
 
     </>)
