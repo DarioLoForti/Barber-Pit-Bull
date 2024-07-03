@@ -78,12 +78,14 @@ export default function(){
                         )) : <p>Loading reviews...</p>
                 } */}
                 <div className="row my-5">
+                    <div className="map d-flex align-items-center">
                     <div className="col-6">
                     {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
                     </div>
                     <div className="col-6">
-                        <h1>Mappa</h1>
+                        <h5 className="text-center">Via Vincenzo Florio, n 23, 90016 Collesano PA</h5>
                         <MapComponent />
+                    </div>
                     </div>
                 </div>
                 
