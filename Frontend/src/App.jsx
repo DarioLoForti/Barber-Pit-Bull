@@ -10,7 +10,7 @@ import Dashboard from "./pages/Dashboard";
 import ProtectPage from "./middlewares/ProtectPage";
 import Work from "./pages/Work";
 import Certificate from "./pages/Certificate";
-// import ShowPhoto from "./pages/ShowPhoto";
+import ShowWork from "./pages/ShowWork";
 // import AddPhoto from "./pages/AddPhoto";
 // import EditPhoto from "./pages/EditPhoto";
 // import Categories from "./pages/Categories";
@@ -28,6 +28,7 @@ export default function(){
                         <Route path="login" element={<Login/>}/>
                         <Route path="register" element={<Register/>}/>
                         <Route path="works" element={<Work/>}/>
+                        <Route path="works/:id" element={<ShowWork/>}/>
                         <Route path="certificates" element={<Certificate/>}/>
                         
                 </Route>
