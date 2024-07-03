@@ -5,13 +5,13 @@ const {
   login,
   modify,
   deleteUser,
-} = require("../controllers/authController.js");
+} = require("../controllers/adminController.js");
 const validator = require("../middlewares/validator.js");
 const {
   registerBody,
   loginBody,
   modifyBody,
-} = require("../validations/users.js");
+} = require("../validations/admin.js");
 const multer = require("multer");
 const path = require("path");
 

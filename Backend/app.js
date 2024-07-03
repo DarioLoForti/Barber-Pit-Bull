@@ -3,10 +3,11 @@ const app = express();
 const cors = require("cors");
 const notFound = require("./middlewares/notFound");
 const errorHandler = require("./middlewares/errorHandler");
-const authRouter = require("./routers/auth");
+const usersRouter = require("./routers/users");
 const servicesRouter = require("./routers/services");
 const reviewsRouter = require("./routers/reviews");
 const appoinmentsRouter = require("./routers/appointments");
+const adminsRouter = require("./routers/admins");
 
 require("dotenv").config();
 const { PORT, HOST } = process.env;
@@ -17,7 +18,9 @@ app.use(express.static("public"));
 app.use(cors());
 app.use(express.json());
 
-app.use("/auth", authRouter);
+app.use("/users", usersRouter);
+
+app.use("/admins", adminsRouter);
 
 app.use("/services", servicesRouter);
 

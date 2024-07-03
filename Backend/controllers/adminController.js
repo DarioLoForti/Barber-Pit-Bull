@@ -1,8 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
-const errorHandler = require("../middlewares/errorHandler");
-const RestError = require("../utils/restError");
-const generateToken = require("../utils/generateToken");
-const deleteImage = require("../utils/deleteImage");
+const errorHandler = require("../middlewares/errorHandler.js");
+const RestError = require("../utils/restError.js");
+const generateToken = require("../utils/generateToken.js");
+const deleteImage = require("../utils/deleteImage.js");
 const { hashPassword, comparePassword } = require("../utils/password.js");
 const prisma = new PrismaClient();
 require("dotenv").config();
