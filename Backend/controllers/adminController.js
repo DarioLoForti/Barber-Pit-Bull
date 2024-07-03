@@ -25,20 +25,20 @@ const register = async (req, res, next) => {
       data.imageUrl = `${HOST}:${port}/imageUrl/${req.file.filename}`;
     }
 
-    const user = await prisma.user.create({
+    const admin = await prisma.admin.create({
       data,
     });
 
     const token = generateToken({
-      email: user.email,
-      name: user.name,
-      id: user.id,
+      email: admin.email,
+      name: admin.name,
+      id: admin.id,
     });
 
-    delete user.id;
-    delete user.password;
+    delete admin.id;
+    delete admin.password;
 
-    res.json({ token, data: user });
+    res.json({ token, data: admin });
   } catch (err) {
     if (req.file) {
       deleteImage("imageUrl", req.file.filename);
@@ -51,31 +51,31 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await prisma.user.findUnique({
+    const admin = await prisma.admin.findUnique({
       where: { email },
     });
 
     const eventualeErrore = new RestError(`Email o password errati.`, 400);
 
-    if (!user) {
+    if (!admin) {
       throw eventualeErrore;
     }
 
-    const isPasswordValid = await comparePassword(password, user.password);
+    const isPasswordValid = await comparePassword(password, admin.password);
     if (!isPasswordValid) {
       throw eventualeErrore;
     }
 
     const token = generateToken({
-      email: user.email,
-      name: user.name,
-      id: user.id,
+      email: admin.email,
+      name: admin.name,
+      id: admin.id,
     });
 
-    delete user.id;
-    delete user.password;
+    delete admin.id;
+    delete admin.password;
 
-    res.json({ token, data: user });
+    res.json({ token, data: admin });
   } catch (err) {
     errorHandler(err, req, res);
   }
@@ -97,15 +97,15 @@ const modify = async (req, res) => {
       data.imageUrl = `${HOST}:${port}/imageUrl/${req.file.filename}`;
     }
 
-    const user = await prisma.user.update({
+    const admin = await prisma.admin.update({
       where: { email },
       data,
     });
 
-    delete user.id;
-    delete user.password;
+    delete admin.id;
+    delete admin.password;
 
-    res.json({ data: user });
+    res.json({ data: admin });
   } catch (err) {
     if (req.file) {
       deleteImage("imageUrl", req.file.filename);
@@ -114,18 +114,18 @@ const modify = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const deleteadmin = async (req, res) => {
   try {
     const { email } = req.body;
 
-    const user = await prisma.user.delete({
+    const admin = await prisma.admin.delete({
       where: { email },
     });
 
-    delete user.id;
-    delete user.password;
+    delete admin.id;
+    delete admin.password;
 
-    res.json({ data: user });
+    res.json({ data: admin });
   } catch (err) {
     errorHandler(err, req, res);
   }
@@ -135,5 +135,5 @@ module.exports = {
   register,
   login,
   modify,
-  deleteUser,
+  deleteadmin,
 };

@@ -47,11 +47,11 @@ const registerBody = {
     },
     custom: {
       options: async (value) => {
-        const user = await prisma.user.findUnique({
+        const admin = await prisma.admin.findUnique({
           where: { email: value },
         });
-        if (user) {
-          throw new Error(`User associato a questa email già presente.`);
+        if (admin) {
+          throw new Error(`admin associato a questa email già presente.`);
         }
         return true;
       },
@@ -121,11 +121,11 @@ const modifyBody = {
     },
     custom: {
       options: async (value) => {
-        const user = await prisma.user.findUnique({
+        const admin = await prisma.admin.findUnique({
           where: { email: value },
         });
-        if (user) {
-          throw new Error(`User associato a questa email già presente.`);
+        if (admin) {
+          throw new Error(`admin associato a questa email già presente.`);
         }
         return true;
       },

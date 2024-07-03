@@ -9,7 +9,7 @@ const {
 const validator = require("../middlewares/validator.js");
 const { paramID } = require("../validations/id.js");
 const { bodyData } = require("../validations/reviews.js");
-const authenticateToken = require("../middlewares/auth.js");
+const authenticateToken = require("../middlewares/authUsers.js");
 
 router.get("/", index);
 

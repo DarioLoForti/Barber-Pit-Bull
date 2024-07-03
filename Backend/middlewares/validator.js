@@ -9,7 +9,9 @@ module.exports = (schema) => {
       if (!errors.isEmpty()) {
         // Determine the folder based on the request URL
         let folder;
-        if (req.url.includes("auth")) {
+        if (req.url.includes("users")) {
+          folder = "imageUrl";
+        } else if (req.url.includes("admins")) {
           folder = "imageUrl";
         } else if (req.url.includes("services")) {
           folder = "imageService";

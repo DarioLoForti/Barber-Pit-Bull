@@ -13,7 +13,7 @@ const validator = require("../middlewares/validator.js");
 const { paramID } = require("../validations/id.js");
 const bodyData = require("../validations/appointments.js");
 const dateParser = require("../middlewares/dateParser.js");
-const authenticateToken = require("../middlewares/auth.js");
+const authenticateToken = require("../middlewares/authUsers.js");
 const { paramAvailability } = require("../validations/availability.js");
 
 router.use(authenticateToken);

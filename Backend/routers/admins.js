@@ -4,7 +4,7 @@ const {
   register,
   login,
   modify,
-  deleteUser,
+  deleteadmin,
 } = require("../controllers/adminController.js");
 const validator = require("../middlewares/validator.js");
 const {
@@ -38,6 +38,6 @@ router.put(
   modify
 );
 
-router.delete("/delete", deleteUser);
+router.delete("/delete", deleteadmin);
 
 module.exports = router;
