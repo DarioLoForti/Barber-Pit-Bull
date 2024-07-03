@@ -15,7 +15,7 @@ module.exports = (schema) => {
           folder = "imageUrl";
         } else if (req.url.includes("services")) {
           folder = "imageService";
-        } else if (req.url.includes("worcks")) {
+        } else if (req.url.includes("works")) {
           folder = "imageWork";
         } else if (req.url.includes("certificates")) {
           folder = "imageCert";

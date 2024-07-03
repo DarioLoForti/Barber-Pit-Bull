@@ -9,6 +9,7 @@ const reviewsRouter = require("./routers/reviews");
 const appoinmentsRouter = require("./routers/appointments");
 const adminsRouter = require("./routers/admins");
 const certificateRouter = require("./routers/certificates");
+const worksRouter = require("./routers/works");
 
 const socketIo = require("socket.io");
 const http = require("http");
@@ -67,6 +68,8 @@ app.use("/reviews", reviewsRouter);
 app.use("/appointments", appoinmentsRouter);
 
 app.use("/certificates", certificateRouter);
+
+app.use("/works", worksRouter);
 
 app.use(notFound);
 app.use(errorHandler);
