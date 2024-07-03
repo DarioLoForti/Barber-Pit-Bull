@@ -5,6 +5,8 @@ const {
   login,
   modify,
   deleteadmin,
+  getDailyAppointments,
+  getAllUsers,
 } = require("../controllers/adminController.js");
 const validator = require("../middlewares/validator.js");
 const {
@@ -14,6 +16,7 @@ const {
 } = require("../validations/admin.js");
 const multer = require("multer");
 const path = require("path");
+const authenticateToken = require("../middlewares/authAdmins.js");
 
 const storage = multer.diskStorage({
   destination: "public/imageUrl",
@@ -32,6 +35,8 @@ router.post(
 
 router.post("/login", validator(loginBody), login);
 
+router.use(authenticateToken);
+
 router.put(
   "/modify",
   [upload.single("imageUrl"), validator(modifyBody)],
@@ -39,5 +44,9 @@ router.put(
 );
 
 router.delete("/delete", deleteadmin);
+
+// Rotte per ottenere gli appuntamenti giornalieri e tutti gli utenti
+router.get("/appointments", getDailyAppointments);
+router.get("/users", getAllUsers);
 
 module.exports = router;

@@ -131,9 +131,71 @@ const deleteadmin = async (req, res) => {
   }
 };
 
+const getDailyAppointments = async (req, res) => {
+  const { date } = req.query;
+
+  if (!date) {
+    return res
+      .status(400)
+      .json({ error: "La data è richiesta nel formato YYYY-MM-DD." });
+  }
+
+  try {
+    const startDate = new Date(date);
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 1);
+
+    const appointments = await prisma.appointment.findMany({
+      where: {
+        datetime: {
+          gte: startDate,
+          lt: endDate,
+        },
+      },
+      include: {
+        services: true,
+        user: {
+          select: {
+            name: true,
+            surname: true,
+            email: true,
+            phone: true,
+          },
+        },
+      },
+    });
+
+    res.status(200).json({ data: appointments });
+  } catch (err) {
+    errorHandler(err, req, res);
+  }
+};
+
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        surname: true,
+        phone: true,
+        email: true,
+        imageUrl: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    res.status(200).json({ data: users });
+  } catch (err) {
+    errorHandler(err, req, res);
+  }
+};
 module.exports = {
   register,
   login,
   modify,
   deleteadmin,
+  getDailyAppointments,
+  getAllUsers,
 };

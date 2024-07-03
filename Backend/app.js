@@ -20,7 +20,7 @@ app.use(express.json());
 
 app.use("/users", usersRouter);
 
-app.use("/admins", adminsRouter);
+app.use("/admin", adminsRouter);
 
 app.use("/services", servicesRouter);
 
