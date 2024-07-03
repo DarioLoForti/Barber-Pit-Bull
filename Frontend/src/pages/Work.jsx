@@ -42,21 +42,34 @@ export default function(){
 
         {photos ? <Slider photos={photos} /> : <p>Loading photos...</p>}
         </div> */}
+
         <div className="works">
-
-            <h1>Benvenuti !!!</h1>
-
-            {works ? works.map((work) => (
-                <div key={work.id} className="work">
-                    <h2>{work.name}</h2>
-                    <p>{work.description}</p>
-                    <img src={work.imageWork} alt={work.title} />
-                    <Link to={`/works/${work.id}`}>Dettagli</Link>
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <h1 className="text-center">I miei Lavori</h1>
                 </div>
-            )) : <p>Loading works...</p>
-            }
-
+            </div>
+            <div className="row">
+                    {works ? works.map((work) => (
+                        <div key={`work{work.id}`} className="col-3">
+                            <div className="card">
+                                <img src={work.imageWork} alt={work.title} />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{work.name}</h5>
+                                        <p className="card-text">{work.description}</p>
+                                        <Link to={`/works/${work.id}`} className="btn btn-secondary">Vedi dettagli</Link>
+                                    </div>
+                            </div>
+                        </div>
+                            )) : 
+                            <p>Loading works...</p>
+                    }
+            </div>
         </div>
+        </div>
+
+
 
     </>)
 }

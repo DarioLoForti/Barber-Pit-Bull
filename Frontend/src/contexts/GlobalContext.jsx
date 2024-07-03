@@ -6,20 +6,20 @@ const GlobalContext = createContext();
 
 const GlobalProvider = ({children}) => {
 
-    const [categories, setCategories] = useState([]);
-    const fetchCategories = async () => {
-        const { data: array } = await axios.get(`/categories`);
-        setCategories(array);
-    }
+    // const [categories, setCategories] = useState([]);
+    // const fetchCategories = async () => {
+    //     const { data: array } = await axios.get(`/categories`);
+    //     setCategories(array);
+    // }
 
 
     useEffect(() => {
-        fetchCategories();
+        // fetchCategories();
     },[]);
     
     return(
         <GlobalContext.Provider value={{
-            categories
+            // categories
         }}>
             {children}
         </GlobalContext.Provider>

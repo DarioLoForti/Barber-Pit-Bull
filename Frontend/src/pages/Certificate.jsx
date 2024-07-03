@@ -43,19 +43,30 @@ export default function(){
         {photos ? <Slider photos={photos} /> : <p>Loading photos...</p>}
         </div> */}
         <div className="certificates">
-
-            <h1>Benvenuti !!!</h1>
-
-            {certificate ? certificate.map((work) => (
-                <div key={work.id} className="certificate">
-                    <h2>{work.name}</h2>
-                    <p>{work.description}</p>
-                    <img src={work.imageCert} alt={work.title} />
-                    <Link to={`/certificate/${work.id}`}>Dettagli</Link>
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <h1 className="text-center">I miei Attestati</h1>
                 </div>
-            )) : <p>Loading certificate...</p>
-            }
-
+            </div>
+            <div className="row">
+                    {certificate ? certificate.map((certificate) => (
+                        <div key={`certificate{certificate.id}`} className="col-3">
+                            <div className="card">
+                                <img src={certificate.imageCert} alt={certificate.title} />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{certificate.name}</h5>
+                                        <p className="card-text">{certificate.description}</p>
+                                        <Link to={`/certificates/${certificate.id}`} className="btn btn-secondary">Vedi dettagli</Link>
+                                    </div>
+                            </div>
+                       
+         </div>
+                            )) : 
+                            <p>Loading certificates...</p>
+                    }
+            </div>
+        </div>
         </div>
 
     </>)

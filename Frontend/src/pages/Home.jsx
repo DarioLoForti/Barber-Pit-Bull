@@ -1,7 +1,6 @@
-// import { Link, useSearchParams } from "react-router-dom";
-// import { useAuth } from "../contexts/AuthContext";
-// import { useState, useEffect } from "react";
-// import axios from "../utils/axiosClient";
+import { Link, useSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import axios from "../utils/axiosClient";
 // import Slider from "../components/Slider";
 
 
@@ -10,7 +9,7 @@ export default function(){
 
     // const {isLoggedIn, user} = useAuth();
 
-    // const [photos, setPhotos] = useState(null);
+    const [reviews, setReviews] = useState(null);
 
     // const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
 
@@ -18,15 +17,15 @@ export default function(){
 
     // // const currPage = parseInt(searchParams.get('page'));
 
-    // const fetchPhotos = async () => {
-    //     const { data: array } = await axios.get(`/photos`);
-    //     setPhotos(array.data);
-    // }
+    const fetchReviews = async () => {
+        const { data: array } = await axios.get(`/reviews`);
+        setReviews(array.data);
+    }
 
 
-    // useEffect(() => {
-    //    fetchPhotos();
-    // }, []);
+    useEffect(() => {
+       fetchReviews();
+    }, []);
    
     // useEffect(() => {
     //     const interval = setInterval(() => {
@@ -49,11 +48,34 @@ export default function(){
 
         </div> */}
 
-        <div className="container">
+        <div className="container-fluid">
             <div className="row">
                 <div className="col-12">
-                    <h1 className="text-center">Benvenuti !!!</h1>
+                    <div className="jumbotron">
+                    <h1 className="text-center">Welcome...</h1>
+                    <img src="../../public/logo/BarberStyle.jpg" alt="" />
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div className="container">
+            <div className="raw">
+                <div className="col-12">
+                    <h3 className="text-center">Recenzioni</h3>
+                </div>
+                {reviews ? reviews.map((review) => (
+                    <div key={`review{review.id}`} className="col-3">
+                        <div className="card">
+                                <div className="card-body">
+                                    <h3 className="card-title">{review.userName}</h3>
+                                    <h5 className="card-text">{review.rating}</h5>
+                                    <p className="card-text">{review.comment}</p>
+                                    <Link to={`/reviews/${review.id}`} className="btn btn-secondary">Vedi dettagli</Link>
+                                </div>
+                        </div>
+                    </div>
+                        )) : <p>Loading reviews...</p>
+                }
             </div>
         </div>
 
