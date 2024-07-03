@@ -300,3 +300,67 @@ overflow: hidden;
         background-color: #0000007e;
     }
 }
+
+.slider {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.664);
+    position: relative;
+    width: 80%;
+    max-width: 400px;
+    height: 200px;
+    margin: auto;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+
+    .slider-content {
+        display: flex;
+        transition: transform 0.5s ease-in-out;
+    }
+    
+    .slide {
+        min-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    .slide-info {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.5);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    
+    button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+    
+    button:first-of-type {
+        left: 10px;
+    }
+    
+    button:last-of-type {
+        right: 10px;
+    }
+
+}
+
+.leaflet-container {
+    height: 400px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}

@@ -1,9 +1,8 @@
 import { Link, useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "../utils/axiosClient";
-// import Slider from "../components/Slider";
-
-
+import Slider from "../components/Slider";
+import MapComponent from "../components/MapComponent";
 
 export default function(){
 
@@ -48,6 +47,8 @@ export default function(){
 
         </div> */}
 
+        
+
         <div className="container-fluid">
             <div className="row">
                 <div className="col-12">
@@ -61,9 +62,9 @@ export default function(){
         <div className="container">
             <div className="raw">
                 <div className="col-12">
-                    <h3 className="text-center">Recenzioni</h3>
+                    <h3 className="text-center my-4">Recenzioni</h3>
                 </div>
-                {reviews ? reviews.map((review) => (
+                {/* {reviews ? reviews.map((review) => (
                     <div key={`review{review.id}`} className="col-3">
                         <div className="card">
                                 <div className="card-body">
@@ -75,7 +76,17 @@ export default function(){
                         </div>
                     </div>
                         )) : <p>Loading reviews...</p>
-                }
+                } */}
+                <div className="row my-5">
+                    <div className="col-6">
+                    {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
+                    </div>
+                    <div className="col-6">
+                        <h1>Mappa</h1>
+                        <MapComponent />
+                    </div>
+                </div>
+                
             </div>
         </div>
 
