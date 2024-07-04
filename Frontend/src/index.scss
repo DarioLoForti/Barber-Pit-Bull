@@ -570,4 +570,12 @@ form{
         }
     }
 }
-   
+ 
+
+.corousel{
+    img{
+        width: 30% !important;
+        
+        object-fit: cover;
+    }
+}
