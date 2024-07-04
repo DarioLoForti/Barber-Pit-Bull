@@ -54,7 +54,8 @@ export default function(){
                 <div className="col-12">
                     <div className="jumbotron">
                     <h1 className="text-center">Welcome...</h1>
-                    <img src="../../public/logo/BarberStyle.jpg" alt="" />
+                    <img className="palo" src="../../public/jumbo/palo barbiere 1.jpg" alt="" />
+                    <img className="barber" src="../../public/logo/BarberStyle.jpg" alt="" />
                     </div>
                 </div>
             </div>
