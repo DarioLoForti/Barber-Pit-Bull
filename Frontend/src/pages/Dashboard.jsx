@@ -12,16 +12,12 @@ import { useAuth } from "../contexts/AuthContext";
 //     },
 // ];
 
-// const urlCategories = [
-//     {
-//         label: 'Categories',
-//         href: '/categories'
-//     },
-//     {
-//         label: 'Add Category',
-//         href: '/create-category'
-//     },
-// ];
+const urlBooking = [
+    {
+        label: 'Bookings',
+        href: '/my-bookings'
+    }
+];
 
 const urlMessage = [
     {
@@ -65,6 +61,13 @@ const {isLoggedIn, logout, user} = useAuth();
             </h3>
         ))}
     </div> */}
+    <div className="card">
+    {urlBooking.map( ({label, href}, i) => (
+            <h3 key={`urlBooking${i}`}>
+                <NavLink to={href}>{label}</NavLink>
+            </h3>
+        ))}
+    </div>
     <div className="card">
     {urlMessage.map( ({label, href}, i) => (
             <h3 key={`urlMessage${i}`}>

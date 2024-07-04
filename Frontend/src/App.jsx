@@ -5,8 +5,6 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LoginAdmin from "./pages/LoginAdmin";
-// import Photos from "./pages/Photos";
-// import PrivateLayout from "./layouts/PrivateLayout";
 import Dashboard from "./pages/Dashboard";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import ProtectPage from "./middlewares/ProtectPage";
@@ -19,9 +17,9 @@ import Appointments from "./pages/Appointments";
 import AddWork from "./pages/AddWork";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
-// import EditPhoto from "./pages/EditPhoto";
-// import Categories from "./pages/Categories";
-// import AddCategory from "./pages/AddCategory";
+import MyBooking from './pages/MyBooking';
+import FormBooking from './pages/FormBooking';
+
 // import AddMessage from "./pages/AddMessage";
 // import Messages from "./pages/Messages";
 
@@ -63,6 +61,9 @@ export default function(){
                     }>
                       {/* <Route path="messages" element={<Messages/>}/> */}
                         <Route path="dashboard" element={<Dashboard />} />
+                        <Route path="my-booking" element={<MyBooking />} />
+                        <Route path="form-booking" element={<FormBooking />} />
+                        <Route path="my-bookings" element={<MyBooking />} />
                     {/* <Route path="photos">
                             <Route path=":id" element={<ShowPhoto/>}/>
                             <Route path=":id/edit" element={<EditPhoto/>}/>
@@ -86,6 +87,7 @@ export default function(){
                         <Route path="users" element={<Users />} />
                         <Route path="appointments" element={<Appointments />} />
                         <Route path="add-work" element={<AddWork />} />
+                        
                 </Route>
 
       </Routes>

@@ -14,7 +14,7 @@ const urlPages = [
     },
     {
         label: 'Prenotati',
-        href: '/booked'
+        href: '/form-booking'
     },
     {
         label: 'Attestati',
