@@ -5,6 +5,7 @@ import Slider from "../components/Slider";
 import MapComponent from "../components/MapComponent";
 import FormReview from '../components/FormReview';
 import { useAuth } from "../contexts/AuthContext";
+import { FaInstagram } from "react-icons/fa";
 
 export default function() {
     const navigate = useNavigate();
@@ -85,13 +86,17 @@ export default function() {
             <div className="container">
                 <div className="row">
                     <div className="map d-flex align-items-center mt-5">
-                        <div className="col-6">
+                        <div className="col-3">
+                            <div className="logo-home"></div>
+                        </div>
+                        <div className="col-3">
                             <h2>Barber Style</h2>
                             <h3>Daniele Mogavero</h3>
                             <h5>Via Vincenzo Florio, n 23, <br /> 90016 Collesano PA</h5>
-                            <p>Telefono: 333 1234567</p>
+                            <p>WhatsApp: +39 333 1234567</p>
                             <p>Email: danielemogavero@gmail.com </p>
                             <p>P.IVA: 03428974235t98</p>
+                            <p><FaInstagram /> <a href="https://www.instagram.com/barber_pit_bull/">Barber_Pit-bull</a> </p>
                         </div>
                         <div className="col-6"> 
                             <MapComponent />
