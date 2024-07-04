@@ -17,6 +17,8 @@ import ShowWork from "./pages/ShowWork";
 import Users from "./pages/Users";
 import Appointments from "./pages/Appointments";
 import AddWork from "./pages/AddWork";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 // import EditPhoto from "./pages/EditPhoto";
 // import Categories from "./pages/Categories";
 // import AddCategory from "./pages/AddCategory";
@@ -35,6 +37,8 @@ export default function(){
                         <Route path="loginAdmin" element={<LoginAdmin/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="register" element={<Register/>}/>
+                        <Route path="privacy-policy" element={<PrivacyPolicy/>}/>
+                        <Route path="terms-of-service" element={<TermsOfService/>}/>
                         <Route path="works" element={<Work/>}/>
                         <Route path="works/:id" element={<ShowWork/>}/>
                         <Route path="certificates" element={<Certificate/>}/>
