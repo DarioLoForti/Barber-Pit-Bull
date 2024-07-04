@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useState, useEffect } from "react";
 import axios from "../utils/axiosClient";
@@ -21,7 +21,12 @@ export default function(){
     const fetchUsers = async () => {
         const { data: array } = await axios.get(`/admin/users`);
         setUsers(array.data);
+        
     }
+    const navigate = useNavigate();
+    const handleBack = () => {
+        navigate('/dashboardAdmin');
+   };
 
 
     useEffect(() => {
@@ -66,6 +71,11 @@ export default function(){
                             )) : 
                             <p>Loading users...</p>
                     }
+                    <div className="col-12">
+                    <div className="back">
+                                <button onClick={handleBack}>Back</button>
+                                </div>
+                    </div>
             </div>
         </div>
         </div>

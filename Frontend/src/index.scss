@@ -506,4 +506,47 @@ overflow: hidden;
     }
     
     }
+    .back{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        button{
+            padding: 10px;
+            background-color: #3333337c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
    }
+
+.appointments{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    .card{
+        border: 1px solid #ccc;
+    align-items: center;
+    color: white;
+    border-radius: 20px;
+    background-color: #00000000;
+    padding: 20px;
+
+
+    }
+    .back{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        button{
+            padding: 10px;
+            background-color: #3333337c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    }
+}
+   

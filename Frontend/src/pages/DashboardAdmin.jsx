@@ -27,6 +27,10 @@ const urlUsers = [
     {
         label: 'users',
         href: '/users'
+    },
+    {
+        label: 'Appuntamenti',
+        href: '/appointments'
     }
 ];
 
@@ -65,13 +69,13 @@ const {isAdminIn, admin, logoutAdmin} = useAuth();
             </h3>
         ))}
     </div> */}
-    <div className="card">
     {urlUsers.map( ({label, href}, i) => (
+    <div className="card">
             <h3 key={`urlUsers${i}`}>
                 <NavLink to={href}>{label}</NavLink>
             </h3>
-        ))}
     </div>
+        ))}
     
 </div>
     </div>
