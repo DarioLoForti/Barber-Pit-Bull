@@ -12,6 +12,7 @@ export default function() {
     const [reviews, setReviews] = useState(null);
     const [popupMessage, setPopupMessage] = useState('');
     const [showPopup, setShowPopup] = useState(false);
+    const [isError, setIsError] = useState(false);
 
     const fetchReviews = async () => {
         const { data: array } = await axios.get(`/reviews`);
@@ -21,12 +22,14 @@ export default function() {
     const sendingReview = async data => {
         try {
             const res = await axios.post(`/reviews`, data);
-            if(res.status < 400) {
+            if (res.status < 400) {
                 setPopupMessage('Recensione inviata!!!');
+                setIsError(false);
                 fetchReviews(); // Fetch updated reviews
             }
         } catch (error) {
             setPopupMessage('Recensione non inserita!!!');
+            setIsError(true);
         } finally {
             setShowPopup(true);
             setTimeout(() => setShowPopup(false), 3000); // Hide popup after 3 seconds
@@ -77,9 +80,9 @@ export default function() {
                 }
                 {!isLoggedIn &&
                     <div className="row my-5">
-                <div className="col-12">
-                                {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
-                            </div>
+                        <div className="col-12">
+                            {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
+                        </div>
                     </div>
                 }
             </div>
@@ -106,32 +109,10 @@ export default function() {
             </div>
 
             {showPopup && 
-                <div className="popup">
+                <div className={`popup ${showPopup ? 'show' : ''} ${isError ? 'error' : 'success'}`}>
                     {popupMessage}
                 </div>
             }
         </>
     );
 }
-
-
-
-
-
-{/* <div className="row my-5">
-                    <div className="home-review">
-                        <div className="col-6">
-                            {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
-                        </div>
-                        <div className="col-6">
-                            {isLoggedIn && 
-                            <div className="create">
-                                <h1>Inserisci la tua Recensione</h1>
-                                <FormReview
-                                    onSubmit={sendingReview} 
-                                />
-                            </div>
-                            }
-                        </div>
-                    </div>
-                </div> */}
