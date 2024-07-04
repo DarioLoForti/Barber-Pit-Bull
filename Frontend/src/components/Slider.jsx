@@ -24,6 +24,19 @@ export default function Slider({ reviews }) {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % reviews.length);
     };
 
+    const renderStars = (rating) => {
+        const stars = [];
+        for (let i = 1; i <= 5; i++) {
+            stars.push(
+                <span key={i} className={i <= rating ? 'star filled' : 'star'}>
+                    ★
+                </span>
+            );
+        }
+        return stars;
+    };
+
+
     return (
         <div className="slider">
             <button onClick={handlePrev}>Prev</button>
@@ -32,7 +45,7 @@ export default function Slider({ reviews }) {
                     <div className="slide">
                         <div key={`review${reviews.id}`}  className="slide-info">
                             <h3>{reviews[currentIndex].userName}</h3>
-                            <h5>{reviews[currentIndex].rating}</h5>
+                            <div className="rating">{renderStars(reviews[currentIndex].rating)}</div>
                             <p>{reviews[currentIndex].comment}</p>
                         </div>
                     </div>

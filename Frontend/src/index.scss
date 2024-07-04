@@ -380,7 +380,7 @@ form{
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.664);
     position: relative;
     max-width: 600px;
-    height: 200px;
+    height: 300px;
     margin: auto;
     overflow: hidden;
     border: 1px solid #ddd;
@@ -405,6 +405,14 @@ form{
         color: white;
         padding: 10px;
         border-radius: 5px;
+        .star {
+            font-size: 24px;
+            color: #ddd;
+        }
+        
+        .star.filled {
+            color: #cda434;
+        }
     }
     
     button {

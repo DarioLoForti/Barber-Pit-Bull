@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useGlobal } from '../contexts/GlobalContext';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function ({initialData, onSubmit}) {
@@ -10,7 +9,6 @@ export default function ({initialData, onSubmit}) {
         user: isLoggedIn ? user.name : ''
     }
 
-
     const [error, setError] = useState('');
     const [data, setData] = useState(defaultData);
 
@@ -20,12 +18,15 @@ export default function ({initialData, onSubmit}) {
         }
     }, [isLoggedIn, user]);
 
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         onSubmit(data);
+        setData({
+            rating: '',
+            comment: '',
+            user: isLoggedIn ? user.name : ''
+        }); // Reset form fields
     }
-
 
     const changeData = (key, newValue) => {
         setData(data => ({...data, [key]: newValue}));
@@ -43,6 +44,7 @@ export default function ({initialData, onSubmit}) {
                             placeholder='User Name'
                             value={data.user}
                             onChange={(e) => changeData('user', e.target.value)}
+                            disabled={isLoggedIn} // Disable user input if logged in
                         />
                     </div>
                     <div className='form-control'>
@@ -72,7 +74,4 @@ export default function ({initialData, onSubmit}) {
         </div>
         </>
     )
-
-
 }
-        
