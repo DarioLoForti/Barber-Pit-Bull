@@ -14,6 +14,7 @@ import AdminPage from "./middlewares/AdminPage";
 import Work from "./pages/Work";
 import Certificate from "./pages/Certificate";
 import ShowWork from "./pages/ShowWork";
+import Users from "./pages/Users";
 // import AddPhoto from "./pages/AddPhoto";
 // import EditPhoto from "./pages/EditPhoto";
 // import Categories from "./pages/Categories";
@@ -77,6 +78,7 @@ export default function(){
                     }>
                       {/* <Route path="messages" element={<Messages/>}/> */}
                         <Route path="dashboardAdmin" element={<DashboardAdmin />} />
+                        <Route path="users" element={<Users />} />
                 </Route>
 
       </Routes>

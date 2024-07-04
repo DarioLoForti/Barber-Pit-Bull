@@ -475,3 +475,23 @@ overflow: hidden;
         
     }
 }
+
+.users{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+   .card{
+    align-items: center;
+    color: white;
+    border-radius: 20px;
+    background-color: #00000000;
+    padding: 20px;
+    img{
+        border-radius: 20px;
+        width:50%;
+        min-height: 150px;
+        object-fit: cover;
+    }
+    
+    }
+   }

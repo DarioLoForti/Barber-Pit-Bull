@@ -23,10 +23,10 @@ import { useAuth } from "../contexts/AuthContext";
 //     },
 // ];
 
-const urlMessage = [
+const urlUsers = [
     {
-        label: 'admin',
-        href: '/dashboardAdmin'
+        label: 'users',
+        href: '/users'
     }
 ];
 
@@ -66,8 +66,8 @@ const {isAdminIn, admin, logoutAdmin} = useAuth();
         ))}
     </div> */}
     <div className="card">
-    {urlMessage.map( ({label, href}, i) => (
-            <h3 key={`urlMessage${i}`}>
+    {urlUsers.map( ({label, href}, i) => (
+            <h3 key={`urlUsers${i}`}>
                 <NavLink to={href}>{label}</NavLink>
             </h3>
         ))}

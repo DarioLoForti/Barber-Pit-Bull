@@ -180,7 +180,7 @@ const getAllUsers = async (req, res) => {
         surname: true,
         phone: true,
         email: true,
-        imageAdmin: true,
+        imageUrl: true,
         createdAt: true,
         updatedAt: true,
       },
