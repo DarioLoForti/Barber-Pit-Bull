@@ -86,7 +86,7 @@ export default function() {
                     </div>
                 }
             </div>
-            <div className="container">
+            <div className="container mb-5">
                 <div className="row">
                     <div className="map d-flex align-items-center mt-5">
                         <div className="col-3">
