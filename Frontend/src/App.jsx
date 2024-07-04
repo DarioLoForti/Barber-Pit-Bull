@@ -4,10 +4,13 @@ import DefaultLayout from "./layouts/DefaultLayout";
 import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import LoginAdmin from "./pages/LoginAdmin";
 // import Photos from "./pages/Photos";
 // import PrivateLayout from "./layouts/PrivateLayout";
 import Dashboard from "./pages/Dashboard";
+import DashboardAdmin from "./pages/DashboardAdmin";
 import ProtectPage from "./middlewares/ProtectPage";
+import AdminPage from "./middlewares/AdminPage";
 import Work from "./pages/Work";
 import Certificate from "./pages/Certificate";
 import ShowWork from "./pages/ShowWork";
@@ -18,6 +21,8 @@ import ShowWork from "./pages/ShowWork";
 // import AddMessage from "./pages/AddMessage";
 // import Messages from "./pages/Messages";
 
+
+
 export default function(){
 
     return (
@@ -25,6 +30,7 @@ export default function(){
                 <Route path="/" element={<DefaultLayout />}>
                     <Route path="*" element={<NotFound/>}/>
                         <Route index element={<Home/>} />
+                        <Route path="loginAdmin" element={<LoginAdmin/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="register" element={<Register/>}/>
                         <Route path="works" element={<Work/>}/>
@@ -62,6 +68,15 @@ export default function(){
                             <Route path=":id/edit" element={<EditPhoto/>}/>
                    </Route>
                     <Route path="create-category" element={<AddCategory/>}/> */}
+                </Route>
+
+                <Route path="/" element={
+                    <AdminPage>
+                    <DefaultLayout />
+                    </AdminPage>
+                    }>
+                      {/* <Route path="messages" element={<Messages/>}/> */}
+                        <Route path="dashboardAdmin" element={<DashboardAdmin />} />
                 </Route>
 
       </Routes>

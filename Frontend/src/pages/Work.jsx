@@ -52,7 +52,7 @@ export default function(){
             </div>
             <div className="row">
                     {works ? works.map((work) => (
-                        <div key={`work{work.id}`} className="col-3">
+                        <div key={`work${work.id}`} className="col-3">
                             <div className="card">
                                 <img src={work.imageWork} alt={work.title} />
                                     <div className="card-body">

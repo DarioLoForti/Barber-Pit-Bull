@@ -19,7 +19,7 @@ const path = require("path");
 const authenticateToken = require("../middlewares/authAdmins.js");
 
 const storage = multer.diskStorage({
-  destination: "public/imageUrl",
+  destination: "public/imageAdmin",
   filename: (req, file, cf) => {
     const fileType = path.extname(file.originalname);
     cf(null, String(Date.now()) + fileType);
@@ -29,7 +29,7 @@ const upload = multer({ storage });
 
 router.post(
   "/register",
-  [upload.single("imageUrl"), validator(registerBody)],
+  [upload.single("imageAdmin"), validator(registerBody)],
   register
 );
 
@@ -39,7 +39,7 @@ router.use(authenticateToken);
 
 router.put(
   "/modify",
-  [upload.single("imageUrl"), validator(modifyBody)],
+  [upload.single("imageAdmin"), validator(modifyBody)],
   modify
 );
 

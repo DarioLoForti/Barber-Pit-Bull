@@ -3,7 +3,7 @@
 // import useStorage from "../hooks/useStorage";
 // import axios from "../utils/axiosClient";
 
-// const AuthContext = createContext();
+// const AuthAdminContext = createContext();
 
 // const AuthProvider = ({ children }) => {
 //     const navigate = useNavigate();
@@ -13,7 +13,7 @@
 
 //     const loginAdmin = async (payload) => {
 //         try {
-//             const { data: response } = await axios.post('/admin/login', payload);
+//             const { data: response } = await axios.post('/admins/login', payload);
 //             setAdmin(response.data); // Salva i dati dell'admin nello storage
 //             localStorage.setItem('accessToken', response.token);
 //             navigate('/');

@@ -22,7 +22,7 @@ const register = async (req, res, next) => {
     };
 
     if (req.file) {
-      data.imageUrl = `${HOST}:${port}/imageUrl/${req.file.filename}`;
+      data.imageAdmin = `${HOST}:${port}/imageAdmin/${req.file.filename}`;
     }
 
     const admin = await prisma.admin.create({
@@ -41,7 +41,7 @@ const register = async (req, res, next) => {
     res.json({ token, data: admin });
   } catch (err) {
     if (req.file) {
-      deleteImage("imageUrl", req.file.filename);
+      deleteImage("imageAdmin", req.file.filename);
     }
     errorHandler(err, req, res);
   }
@@ -94,7 +94,7 @@ const modify = async (req, res) => {
     };
 
     if (req.file) {
-      data.imageUrl = `${HOST}:${port}/imageUrl/${req.file.filename}`;
+      data.imageAdmin = `${HOST}:${port}/imageAdmin/${req.file.filename}`;
     }
 
     const admin = await prisma.admin.update({
@@ -108,7 +108,7 @@ const modify = async (req, res) => {
     res.json({ data: admin });
   } catch (err) {
     if (req.file) {
-      deleteImage("imageUrl", req.file.filename);
+      deleteImage("imageAdmin", req.file.filename);
     }
     errorHandler(err, req, res);
   }
@@ -180,7 +180,7 @@ const getAllUsers = async (req, res) => {
         surname: true,
         phone: true,
         email: true,
-        imageUrl: true,
+        imageAdmin: true,
         createdAt: true,
         updatedAt: true,
       },

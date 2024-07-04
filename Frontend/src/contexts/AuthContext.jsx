@@ -10,14 +10,31 @@ const AuthProvider = ({children}) => {
     const navigate = useNavigate();
 
     const [user, setUser] = useStorage(null, 'user');
+    const [admin, setAdmin] = useStorage(null, 'admin');
+
     const isLoggedIn = user !== null;
+    const isAdminIn = admin !== null;
 
     const login = async (payload) => {
         try{
             const { data: response } = await axios.post('/users/login', payload);
             setUser(response.data);
             localStorage.setItem('accessToken', response.token);
-            navigate('/');
+            navigate('/dashboard');
+        }catch(err){
+            const { errors } = err.response.data;
+            const error = new Error(errors ? 'Error Login' : err.response.data);
+            error.errors = errors;
+            throw error;
+        }
+    }
+
+    const loginAdmin = async (payload) => {
+        try{
+            const { data: response } = await axios.post('/admin/login', payload);
+            setAdmin(response.data);
+            localStorage.setItem('accessToken', response.token);
+            navigate('/dashboardAdmin');
         }catch(err){
             const { errors } = err.response.data;
             const error = new Error(errors ? 'Error Login' : err.response.data);
@@ -54,11 +71,21 @@ const AuthProvider = ({children}) => {
         navigate('/login');
     }
 
+    const logoutAdmin = () => {
+        setAdmin(null);
+        localStorage.removeItem('accessToken');
+        navigate('/loginAdmin');
+    }
+
     const value = {
         isLoggedIn,
+        isAdminIn,
         login,
+        loginAdmin,
         logout,
+        logoutAdmin,
         user,
+        admin,
         register
     };
 

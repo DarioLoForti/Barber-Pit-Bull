@@ -12,7 +12,7 @@ module.exports = (schema) => {
         if (req.url.includes("users")) {
           folder = "imageUrl";
         } else if (req.url.includes("admin")) {
-          folder = "imageUrl";
+          folder = "imageAdmin";
         } else if (req.url.includes("services")) {
           folder = "imageService";
         } else if (req.url.includes("works")) {

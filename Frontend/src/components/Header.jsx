@@ -24,14 +24,17 @@ const urlPages = [
         label: 'Contatti',
         href: '/contact'
     
+    },
+    {
+        label: 'Admin',
+        href: '/loginAdmin'
     }
 ]
 
 export default function(){
 
-const {isLoggedIn, logout, user} = useAuth();
+const {isLoggedIn, logout, user, isAdminIn, logoutAdmin, admin} = useAuth();
 
-// const {isAdminIn, logoutAdmin, admin} = useAdmin();
 
     return (
         <header>
@@ -50,19 +53,34 @@ const {isLoggedIn, logout, user} = useAuth();
                                     </li>
                                 ))}
                                 
-                                {!isLoggedIn && <>
-                                    <li>
-                                        <NavLink to={`/login`}>Login</NavLink>
-                                    </li>
-                                    <li>
-                                        <NavLink to={`/register`}>Register</NavLink>
-                                    </li>
-                                </>}
+                                    {!isLoggedIn && (
+                                       <div className="btn-group dropend">
+                                       <button type="button" className="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                       User
+                                       </button>
+                                           <ul className="dropdown-menu">
+                                           <li><NavLink className="dropdown-item" to="/login">Login</NavLink></li>
+                                           </ul>
+                                       </div>
+                                    )}
+                                    {isLoggedIn && (
+                                        <li className="nav-item">
+                                            <NavLink className="nav-link" to="/dashboard">{user.name}</NavLink>
+                                        </li>
+                                    )}
                                 {isLoggedIn &&
                                     <li>
                                         <NavLink to={`/dashboard`}>{user.name}</NavLink>
                                     </li>
                                 }
+                                {
+                                    isAdminIn && (
+                                        <li>
+                                            <NavLink to="/dashboardAdmin">{admin.name}</NavLink>
+                                        </li>
+                                    )
+                                }
+                                
                                 {/* {!isAdminIn&& <>
                                     <li>
                                         <NavLink to={`/loginAdmin`}>Login</NavLink>
@@ -84,3 +102,5 @@ const {isLoggedIn, logout, user} = useAuth();
         </header>
     )
 }
+
+
