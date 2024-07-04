@@ -236,11 +236,13 @@ form{
           }
       }
       .user{
+        border-radius: 20px;
           display: flex;
           flex-direction: column;
           gap: 1rem;
           align-items: center;
           h3{
+            border-radius: 20px;
               margin-top: 10px;
           
           }
