@@ -57,23 +57,30 @@ export default function() {
                         <h3 className="text-center my-4">Recenzioni</h3>
                     </div>
                 </div>
-                <div className="row my-5">
-                    <div className="home-review">
-                        <div className="col-6">
-                            {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
-                        </div>
-                        <div className="col-6">
-                            {isLoggedIn && 
-                            <div className="create">
-                                <h1>Inserisci la tua Recensione</h1>
-                                <FormReview
-                                    onSubmit={sendingReview} 
-                                />
+                {isLoggedIn &&
+                    <div className="row my-5">
+                        <div className="home-review">
+                            <div className="col-6">
+                                {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
                             </div>
-                            }
+                            <div className="col-6">
+                                <div className="create">
+                                    <h1>Inserisci la tua Recensione</h1>
+                                    <FormReview
+                                        onSubmit={sendingReview} 
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
+                {!isLoggedIn &&
+                    <div className="row my-5">
+                <div className="col-12">
+                                {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
+                            </div>
+                    </div>
+                }
             </div>
             <div className="container">
                 <div className="row">
@@ -101,3 +108,25 @@ export default function() {
         </>
     );
 }
+
+
+
+
+
+{/* <div className="row my-5">
+                    <div className="home-review">
+                        <div className="col-6">
+                            {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
+                        </div>
+                        <div className="col-6">
+                            {isLoggedIn && 
+                            <div className="create">
+                                <h1>Inserisci la tua Recensione</h1>
+                                <FormReview
+                                    onSubmit={sendingReview} 
+                                />
+                            </div>
+                            }
+                        </div>
+                    </div>
+                </div> */}
