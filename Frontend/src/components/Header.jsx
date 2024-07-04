@@ -21,11 +21,6 @@ const urlPages = [
         href: '/certificates'
     },
     {
-        label: 'Contatti',
-        href: '/contact'
-    
-    },
-    {
         label: 'Admin',
         href: '/loginAdmin'
     }

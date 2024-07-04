@@ -79,12 +79,20 @@ export default function(){
                         )) : <p>Loading reviews...</p>
                 } */}
                 <div className="row my-5">
-                    <div className="map d-flex align-items-center">
-                    <div className="col-6">
+                    <div className="col-12">
                     {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}
                     </div>
+                    <div className="map d-flex align-items-center mt-5">
                     <div className="col-6">
-                        <h5 className="text-center">Via Vincenzo Florio, n 23, 90016 Collesano PA</h5>
+                        <h2>Barber Style</h2>
+                    <h3>Daniele Mogavero</h3>
+                    <h5>Via Vincenzo Florio, n 23, <br /> 90016 Collesano PA</h5>
+                    <p>Telefono: 333 1234567</p>
+                    <p>Email: danielemogavero@gmail.com </p>
+                    <p>P.IVA: 03428974235t98</p>
+                    </div>
+                    <div className="col-6">
+                        
                         <MapComponent />
                     </div>
                     </div>
