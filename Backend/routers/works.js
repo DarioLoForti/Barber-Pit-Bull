@@ -3,6 +3,7 @@ const router = express.Router();
 const { paramID } = require("../validations/id");
 const { bodyData } = require("../validations/works");
 const validator = require("../middlewares/validator");
+const authenticateToken = require("../middlewares/authAdmins.js");
 const {
   store,
   index,
@@ -31,6 +32,8 @@ router.post("/", [upload.single("imageWork"), validator(bodyData)], store);
 router.use("/:id", validator(paramID));
 
 router.get("/:id", show);
+
+router.use(authenticateToken);
 
 router.put("/:id", [upload.single("imageWork"), validator(bodyData)], update);
 

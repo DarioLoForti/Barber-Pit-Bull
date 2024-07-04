@@ -16,7 +16,7 @@ import Certificate from "./pages/Certificate";
 import ShowWork from "./pages/ShowWork";
 import Users from "./pages/Users";
 import Appointments from "./pages/Appointments";
-// import AddPhoto from "./pages/AddPhoto";
+import AddWork from "./pages/AddWork";
 // import EditPhoto from "./pages/EditPhoto";
 // import Categories from "./pages/Categories";
 // import AddCategory from "./pages/AddCategory";
@@ -81,6 +81,7 @@ export default function(){
                         <Route path="dashboardAdmin" element={<DashboardAdmin />} />
                         <Route path="users" element={<Users />} />
                         <Route path="appointments" element={<Appointments />} />
+                        <Route path="add-work" element={<AddWork />} />
                 </Route>
 
       </Routes>

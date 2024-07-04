@@ -1,27 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-// const urlPhoto = [
-//     {
-//         label: 'Photos',
-//         href: '/photos'
-//     },
-//     {
-//         label: 'Add Photo',
-//         href: '/create-photo'
-//     },
-// ];
-
-// const urlCategories = [
-//     {
-//         label: 'Categories',
-//         href: '/categories'
-//     },
-//     {
-//         label: 'Add Category',
-//         href: '/create-category'
-//     },
-// ];
+const urlWork = [
+    {
+        label: 'Works',
+        href: '/works'
+    },
+    {
+        label: 'Add Work',
+        href: '/add-work'
+    },
+];
 
 const urlUsers = [
     {
@@ -69,6 +58,13 @@ const {isAdminIn, admin, logoutAdmin} = useAuth();
             </h3>
         ))}
     </div> */}
+    <div className="card">
+    {urlWork.map( ({label, href}, i) => (
+            <h3 key={`urlWork${i}`}>
+                <NavLink to={href}>{label}</NavLink>
+            </h3>
+        ))}
+    </div>
     {urlUsers.map( ({label, href}, i) => (
     <div className="card">
             <h3 key={`urlUsers${i}`}>
