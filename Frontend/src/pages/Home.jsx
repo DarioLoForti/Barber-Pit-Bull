@@ -1,4 +1,3 @@
-// src/pages/Home.jsx
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "../utils/axiosClient";
@@ -97,10 +96,10 @@ export default function Home() {
                             <h2>Barber Style</h2>
                             <h3>Daniele Mogavero</h3>
                             <h5>Via Vincenzo Florio, n 23, <br /> 90016 Collesano PA</h5>
-                            <p>WhatsApp: +39 333 1234567</p>
-                            <p>Email: danielemogavero@gmail.com </p>
+                            <p>WhatsApp: <a href="https://wa.me/393331234567" target="_blank" rel="noopener noreferrer">+39 333 1234567</a></p>
+                            <p>Email: <a href="mailto:danielemogavero@gmail.com">danielemogavero@gmail.com</a></p>
                             <p>P.IVA: 03428974235t98</p>
-                            <p><FaInstagram /> <a href="https://www.instagram.com/barber_pit_bull/">Barber_Pit-bull</a> </p>
+                            <p><FaInstagram /> <a href="https://www.instagram.com/barber_pit_bull/" target="_blank" rel="noopener noreferrer">Barber_Pit-bull</a></p>
                         </div>
                         <div className="col-6"> 
                             <MapComponent />

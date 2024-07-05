@@ -60,8 +60,8 @@ export default function() {
                                     <div className="card-body">
                                         <h5 className="card-title">{user.name}</h5>
                                         <h5 className="card-title">{user.surname}</h5>
-                                        <p className="card-text">{user.email}</p>
-                                        <p className="card-text">{user.phone}</p>
+                                        <p className="card-text">Email: <a href={`mailto:${user.email}`}>{user.email}</a></p>
+                                        <p className="card-text">Tel: <a href={`tel:${user.phone}`}>{user.phone}</a></p>
                                     </div>
                                 </div>
                             </div>
