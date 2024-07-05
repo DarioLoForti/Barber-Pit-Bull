@@ -44,6 +44,8 @@ export default function Home() {
 
     return (
         <>
+        <div className="home">
+
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-12">
@@ -97,7 +99,7 @@ export default function Home() {
                         <div className="col-3">
                             <h2>Barber Style</h2>
                             <h3>Daniele Mogavero</h3>
-                            <h5>Via Vincenzo Florio, n 23, <br /> 90016 Collesano PA</h5>
+                            <h5><a href="https://www.google.com/maps/search/?api=1&query=Via+Vincenzo+Florio,+23,+90016+Collesano+PA" target="_blank" rel="noopener noreferrer">Via Vincenzo Florio, n 23, <br /> 90016 Collesano PA</a></h5>
                             <p>WhatsApp: <a href="https://wa.me/393331234567" target="_blank" rel="noopener noreferrer">+39 333 1234567</a></p>
                             <p>Email: <a href="mailto:danielemogavero@gmail.com">danielemogavero@gmail.com</a></p>
                             <p>P.IVA: 03428974235t98</p>
@@ -115,6 +117,7 @@ export default function Home() {
                     {popupMessage}
                 </div>
             }
+        </div>
         </>
     );
 }
