@@ -48,7 +48,9 @@ export default function Home() {
                 <div className="row">
                     <div className="col-12">
                         <div className="jumbotron">
-                            <h1 className="text-center">Welcome...</h1>
+                            {isLoggedIn && <h1>Welcome {user.name}</h1>
+                            }
+                            {!isLoggedIn && <h1>Welcome...</h1>}
                             <img className="palo" src="../../public/jumbo/palo barbiere 1.jpg" alt="" />
                             <img className="barber" src="../../public/logo/BarberStyle.jpg" alt="" />
                         </div>
