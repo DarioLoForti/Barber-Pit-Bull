@@ -4,34 +4,38 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Risolve problemi con l'icona di Leaflet
-delete L.Icon.Default.prototype._getIconUrl;
-
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://img.freepik.com/free-vector/location_53876-25530.jpg?size=338&ext=jpg&ga=GA1.1.1413502914.1719878400&semt=ais_user',
-  iconUrl: 'https://img.freepik.com/free-vector/location_53876-25530.jpg?size=338&ext=jpg&ga=GA1.1.1413502914.1719878400&semt=ais_user',
-//   shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+// Personalizzazione dell'icona del marker
+const customMarkerIcon = new L.Icon({
+  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png', // URL dell'icona personalizzata
+  iconSize: [32, 32], // Dimensioni dell'icona
+  iconAnchor: [16, 32], // Punto dell'icona che corrisponderà alla posizione del marker
+  popupAnchor: [0, -32], // Punto del popup che corrisponderà alla posizione del marker
 });
 
 const center = {
-  lat: 	37.923299, 
-  lng: 	13.939015 
+  lat: 37.919236,
+  lng: 13.936539
 };
 
 const MapComponent = () => {
+  const tomtomApiKey = 'UMV1Glp9BfPiNdAdY3h7MkpPD5yBDFrC';
+
   return (
     <MapContainer center={center} zoom={15} style={{ height: "300px", width: "80%" }}>
       <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        url={`https://api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=${tomtomApiKey}`}
+        attribution='&copy; <a href="https://developer.tomtom.com">TomTom</a> contributors'
       />
-      <Marker position={center}>
+      <Marker position={center} icon={customMarkerIcon}>
         <Popup>
           Via Vincenzo Florio, n 23, 90016 Collesano PA
         </Popup>
       </Marker>
     </MapContainer>
-  )
+  );
 }
 
 export default MapComponent;
+
+
+

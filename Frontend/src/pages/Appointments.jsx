@@ -1,31 +1,31 @@
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthContext";
-import { useState, useEffect } from "react";
-import axios from "../utils/axiosClient";
-// import Slider from "../components/Slider";
+import { useState, useEffect } from 'react';
+import axios from '../utils/axiosClient';
+import { useAuth } from '../contexts/AuthContext';
 
-export default function () {
+export default function Appointments() {
     const { isLoggedIn, user } = useAuth();
     const [appointments, setAppointments] = useState(null);
     const [date, setDate] = useState(null);
     const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
 
     const fetchAppointments = async () => {
-        const { data: array } = await axios.get(
-            `/admin/appointments?date=${date}`
-        );
+        const { data: array } = await axios.get(`/admin/appointments?date=${date}`);
         const formattedAppointments = array.data.map((appointment) => ({
             ...appointment,
             formattedDatetime: formatDatetime(appointment.datetime),
         }));
+        // Ordina gli appuntamenti in ordine cronologico per orario
+        formattedAppointments.sort((a, b) => {
+            const timeA = new Date(a.datetime).getTime();
+            const timeB = new Date(b.datetime).getTime();
+            return timeA - timeB;
+        });
         setAppointments(formattedAppointments);
     };
 
     const formatDatetime = (datetime) => {
         const dateObj = new Date(datetime);
-        const formattedDate = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}T${formatTime(
-            dateObj.getHours()
-        )}:${formatTime(dateObj.getMinutes())}`;
+        const formattedDate = `${dateObj.getDate()}-${dateObj.getMonth() + 1}-${dateObj.getFullYear()}T${formatTime(dateObj.getHours())}:${formatTime(dateObj.getMinutes())}`;
         return formattedDate;
     };
 
@@ -33,7 +33,6 @@ export default function () {
         return time < 10 ? `0${time}` : `${time}`;
     };
 
-    const navigate = useNavigate();
     const handleBack = () => {
         navigate("/dashboardAdmin");
     };

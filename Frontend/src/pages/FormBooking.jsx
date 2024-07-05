@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from '../utils/axiosClient';
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Booking() {
     const initialData = {
@@ -12,6 +13,7 @@ export default function Booking() {
     const [services, setServices] = useState([]);
     const [bookingError, setBookingError] = useState(null);
     const [bookingSuccess, setBookingSuccess] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Fetch available services
@@ -57,6 +59,7 @@ export default function Booking() {
             setFormData(initialData);
             setBookingSuccess('Prenotazione effettuata con successo!');
             setBookingError(null);
+            navigate('/my-bookings');
         } catch (err) {
             console.error('Errore durante la prenotazione:', err);
             setBookingError(err.message || 'Errore durante la prenotazione');

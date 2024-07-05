@@ -190,19 +190,19 @@ form{
 }
 
 .dashboard-container{
-  .dash{
-      text-align: center;
-      // background-color: black;
-      padding-top: 100px;
-      color: white;
-  }
+    min-height: 100vh;
+    background-image: url(../public/jumbo/jumbo.jpg);  
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
   
   .dashboard{
-      // background-color: black;
+      background-color: rgba(0, 0, 0, 0);
       height: 100%;
       display: flex;
       justify-content: space-around;
       align-items: center;
+      padding-top: 10%;
       .card{
           border: 1px solid #ccc;
           box-shadow: 0 0 20px rgba(255, 255, 255, 0.664);
@@ -767,4 +767,7 @@ form{
         background-color: #f44336; /* Red */
     }
     
+}
+.map{
+    margin-bottom: 60px;
 }

@@ -1,3 +1,4 @@
+// src/pages/Home.jsx
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "../utils/axiosClient";
@@ -7,7 +8,7 @@ import FormReview from '../components/FormReview';
 import { useAuth } from "../contexts/AuthContext";
 import { FaInstagram } from "react-icons/fa";
 
-export default function() {
+export default function Home() {
     const navigate = useNavigate();
     const [reviews, setReviews] = useState(null);
     const [popupMessage, setPopupMessage] = useState('');
@@ -58,7 +59,7 @@ export default function() {
             <div className="container-fluid">
                 <div className="raw">
                     <div className="col-12">
-                        <h3 className="text-center my-4">Recenzioni</h3>
+                        <h3 className="text-center my-4">Recensioni</h3>
                     </div>
                 </div>
                 {isLoggedIn &&
@@ -88,7 +89,7 @@ export default function() {
             </div>
             <div className="container mb-5">
                 <div className="row">
-                    <div className="map d-flex align-items-center mt-5">
+                    <div className="map d-flex align-items-center">
                         <div className="col-3">
                             <div className="logo-home"></div>
                         </div>
