@@ -563,14 +563,19 @@ form{
     }
 }
 .alert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
+    border: 1px solid #ccc !important;
+    border-radius: 20%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgba(3, 3, 3, 0.788);
     padding: 20px;
     width: 400px; /* larghezza dell'alert */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(251, 251, 251, 0.575);
     button{
         margin: 20px;
         padding: 10px;
@@ -581,6 +586,7 @@ form{
         cursor: pointer;
         &:hover{
             background-color: #cf0000;
+            color: white;
         }
     }
 }
