@@ -10,8 +10,40 @@ const create = async (req, res) => {
 
   const parsedDateTime = moment(datetime, "DD/MM/YYYY HH:mm", true);
 
+  const serviceDurations = await prisma.service.findMany({
+    where: { id: { in: services } },
+    select: { duration: true },
+  });
+
+  const totalDuration = serviceDurations.reduce(
+    (total, service) => total + service.duration,
+    0
+  );
+
+  const endDateTime = parsedDateTime.clone().add(totalDuration, "minutes");
+
+  const conflictingAppointments = await prisma.appointment.findMany({
+    where: {
+      OR: [
+        {
+          datetime: {
+            lte: endDateTime.toDate(),
+          },
+          endDateTime: {
+            gte: parsedDateTime.toDate(),
+          },
+        },
+      ],
+    },
+  });
+
+  if (conflictingAppointments.length > 0) {
+    return res.status(400).json({ error: "La fascia oraria è già occupata." });
+  }
+
   const data = {
     datetime: parsedDateTime.toDate(),
+    endDateTime: endDateTime.toDate(),
     status,
     userId: req.user.id,
     services: {
@@ -21,6 +53,66 @@ const create = async (req, res) => {
 
   try {
     const appointment = await prisma.appointment.create({
+      data,
+      include: { services: true, user: true },
+    });
+
+    res.status(200).send(appointment);
+  } catch (err) {
+    errorHandler(err, req, res);
+  }
+};
+
+const update = async (req, res) => {
+  const { datetime, status, services } = req.body;
+  const id = parseInt(req.params.id);
+
+  const parsedDateTime = moment(datetime, "DD/MM/YYYY HH:mm", true);
+
+  const serviceDurations = await prisma.service.findMany({
+    where: { id: { in: services } },
+    select: { duration: true },
+  });
+
+  const totalDuration = serviceDurations.reduce(
+    (total, service) => total + service.duration,
+    0
+  );
+
+  const endDateTime = parsedDateTime.clone().add(totalDuration, "minutes");
+
+  const conflictingAppointments = await prisma.appointment.findMany({
+    where: {
+      id: { not: id },
+      OR: [
+        {
+          datetime: {
+            lte: endDateTime.toDate(),
+          },
+          endDateTime: {
+            gte: parsedDateTime.toDate(),
+          },
+        },
+      ],
+    },
+  });
+
+  if (conflictingAppointments.length > 0) {
+    return res.status(400).json({ error: "La fascia oraria è già occupata." });
+  }
+
+  const data = {
+    datetime: parsedDateTime.toDate(),
+    endDateTime: endDateTime.toDate(),
+    status,
+    services: {
+      set: services.map((id) => ({ id })),
+    },
+  };
+
+  try {
+    const appointment = await prisma.appointment.update({
+      where: { id },
       data,
       include: { services: true, user: true },
     });
@@ -62,31 +154,6 @@ const show = async (req, res) => {
   }
 };
 
-const update = async (req, res) => {
-  const { date, status, services } = req.body;
-  const id = parseInt(req.params.id);
-
-  const data = {
-    date: new Date(date),
-    status,
-    services: {
-      set: services.map((id) => ({ id })),
-    },
-  };
-
-  try {
-    const appointment = await prisma.appointment.update({
-      where: { id },
-      data,
-      include: { services: true, user: true },
-    });
-
-    res.status(200).send(appointment);
-  } catch (err) {
-    errorHandler(err, req, res);
-  }
-};
-
 const destroy = async (req, res) => {
   try {
     const { id } = req.params;
@@ -101,60 +168,51 @@ const destroy = async (req, res) => {
 
 const getAvailability = async (req, res) => {
   try {
-    const { datetime } = req.query;
+    const { date, duration } = req.query;
 
-    // Verifica se la data è nel formato corretto (dd/MM/yyyy)
-    const parsedDatetime = moment(datetime, "YYYY-MM-DD").toDate();
-    // if (!parsedDateTime.isValid()) {
-    //   return res
-    //     .status(400)
-    //     .json({ error: "La data non è nel formato corretto (dd/MM/yyyy)." });
-    // }
+    // Verifica se la data è nel formato corretto (yyyy-MM-dd)
+    const parsedDate = moment(date, "YYYY-MM-DD", true).toDate();
+    const serviceDuration = parseInt(duration);
+
+    if (!parsedDate || isNaN(serviceDuration)) {
+      return res.status(400).json({ error: "Data o durata non validi." });
+    }
 
     const appointments = await prisma.appointment.findMany({
       where: {
         datetime: {
-          gte: new Date(parsedDatetime.setHours(9, 0, 0, 0)),
-          lt: new Date(parsedDatetime.setHours(20, 0, 0, 0)),
+          gte: new Date(parsedDate.setHours(9, 0, 0, 0)),
+          lt: new Date(parsedDate.setHours(20, 0, 0, 0)),
         },
       },
     });
 
-    // Costruisci gli slot disponibili
     const slots = [];
     const startHour = 9;
     const endHour = 20;
 
-    // Crea gli slot per ogni ora lavorativa
     for (let hour = startHour; hour <= endHour; hour++) {
-      slots.push({
-        time: `${hour}:00`,
-        available: true,
-      });
+      const slotEnd = hour + serviceDuration / 60;
+      if (slotEnd <= endHour) {
+        slots.push({
+          time: `${hour}:00`,
+          available: !appointments.some((appt) => {
+            const apptHour = new Date(appt.datetime).getHours();
+            return apptHour >= hour && apptHour < slotEnd;
+          }),
+        });
+      }
     }
 
-    // Imposta come non disponibili gli slot già prenotati
-    appointments.forEach((appointment) => {
-      const appointmentHour = new Date(appointment.datetime).getHours();
-      const slotIndex = slots.findIndex(
-        (slot) => parseInt(slot.time) === appointmentHour
-      );
-      if (slotIndex !== -1) {
-        slots[slotIndex].available = false;
-      }
-    });
-
-    res.json({
-      datetime: moment(parsedDatetime).format("DD/MM/YYYY"),
-      slots,
-      slots,
-    });
+    res.json({ slots });
   } catch (err) {
     console.error("Errore nella ricerca della disponibilità:", err);
-    res.status(500).json({
-      error:
-        "Si è verificato un errore durante la ricerca della disponibilità.",
-    });
+    res
+      .status(500)
+      .json({
+        error:
+          "Si è verificato un errore durante la ricerca della disponibilità.",
+      });
   }
 };
 

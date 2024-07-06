@@ -11,12 +11,10 @@ module.exports = (req, res, next) => {
 
     // Verifica se la data è valida secondo il formato specificato
     if (!parsedDatetime.isValid()) {
-      return res
-        .status(400)
-        .json({
-          error:
-            "La data e l'ora non sono nel formato corretto (dd/MM/yyyy HH:mm).",
-        });
+      return res.status(400).json({
+        error:
+          "La data e l'ora non sono nel formato corretto (dd/MM/yyyy HH:mm).",
+      });
     }
 
     // Sovrascrivi datetime nel corpo della richiesta con l'oggetto Date

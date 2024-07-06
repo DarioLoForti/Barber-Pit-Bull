@@ -10,6 +10,7 @@ import DashboardAdmin from "./pages/DashboardAdmin";
 import ProtectPage from "./middlewares/ProtectPage";
 import AdminPage from "./middlewares/AdminPage";
 import Work from "./pages/Work";
+import EditWork from "./pages/EditWork";
 import Certificate from "./pages/Certificate";
 import ShowWork from "./pages/ShowWork";
 import Users from "./pages/Users";
@@ -87,7 +88,7 @@ export default function(){
                         <Route path="users" element={<Users />} />
                         <Route path="appointments" element={<Appointments />} />
                         <Route path="add-work" element={<AddWork />} />
-                        
+                        <Route path="works/:id/edit" element={<EditWork/>}/>                        
                 </Route>
 
       </Routes>

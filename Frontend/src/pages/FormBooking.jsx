@@ -11,38 +11,66 @@ export default function Booking() {
 
     const [formData, setFormData] = useState(initialData);
     const [services, setServices] = useState([]);
+    const [availableSlots, setAvailableSlots] = useState([]);
+    const [serviceDurations, setServiceDurations] = useState({});
+    const [totalDuration, setTotalDuration] = useState(0);
     const [bookingError, setBookingError] = useState(null);
     const [bookingSuccess, setBookingSuccess] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch available services
         const fetchServices = async () => {
             try {
                 const { data } = await axios.get('/services');
                 setServices(data.data);
+                const durations = data.data.reduce((acc, service) => {
+                    acc[service.id] = service.duration;
+                    return acc;
+                }, {});
+                setServiceDurations(durations);
             } catch (err) {
-                console.error('Error fetching services:', err);
+                console.error('Errore nel recuperare i servizi:', err);
             }
         };
 
         fetchServices();
     }, []);
 
-    
+    useEffect(() => {
+        const fetchAvailableSlots = async (date, duration) => {
+            try {
+                console.log('Fetching available slots for date:', date, 'and duration:', duration);
+                const { data } = await axios.get(`/appointments/availability?date=${date}&duration=${duration}`);
+                console.log('Slot disponibili:', data.slots);
+                const filteredSlots = data.slots.filter(slot => slot.available);
+                setAvailableSlots(filteredSlots);
+            } catch (err) {
+                console.error('Errore nel recuperare le fasce orarie disponibili:', err);
+            }
+        };
+
+        if (formData.datetime && totalDuration > 0) {
+            const date = formData.datetime.split('T')[0];
+            fetchAvailableSlots(date, totalDuration);
+        }
+    }, [formData.datetime, totalDuration]);
+
     const changeData = (key, value) => {
         setFormData(curr => ({
             ...curr,
             [key]: value
         }));
     };
-    
 
     const handleServiceChange = (serviceId) => {
         setFormData(curr => {
             const newServices = curr.services.includes(serviceId)
                 ? curr.services.filter(id => id !== serviceId)
                 : [...curr.services, serviceId];
+
+            const newTotalDuration = newServices.reduce((total, id) => total + (serviceDurations[id] || 0), 0);
+            setTotalDuration(newTotalDuration);
+
             return {
                 ...curr,
                 services: newServices,
@@ -52,17 +80,14 @@ export default function Booking() {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        console.log('Data da inviare:', formData); // Controlla i dati che stai inviando
-
         try {
-            await axios.post(`/appointments/`, formData);
+            await axios.post('/appointments', formData);
             setFormData(initialData);
             setBookingSuccess('Prenotazione effettuata con successo!');
             setBookingError(null);
             navigate('/my-bookings');
         } catch (err) {
-            console.error('Errore durante la prenotazione:', err);
-            setBookingError(err.message || 'Errore durante la prenotazione');
+            setBookingError(err.response.data.error || 'Errore durante la prenotazione');
             setBookingSuccess(null);
         }
     };
@@ -73,11 +98,10 @@ export default function Booking() {
                 <div className="col-12">
                     <h1 className="text-center mb-5">Prenota un Servizio</h1>
                     <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                            <label>Data e Orario (dd/MM/yyyy HH:mm)</label>
+                        <div className="form-group">
+                            <label>Data e Orario</label>
                             <input 
-                                type="text"
-                                placeholder="Inserisci data e orario (dd/MM/yyyy HH:mm)"
+                                type="datetime-local" 
                                 required 
                                 value={formData.datetime} 
                                 onChange={e => changeData('datetime', e.target.value)} 
@@ -98,20 +122,26 @@ export default function Booking() {
                                             className="form-check-input"
                                         />
                                         <label htmlFor={`service-${service.id}`} className="form-check-label">
-                                            {service.name}
+                                            {service.name} (Durata: {service.duration} minuti)
                                         </label>
                                     </div>
                                 ))}
                             </div>
                         </div>
                         <div className="form-group">
-                            <label>Status</label>
-                            <input
-                                type="checkbox"
-                                checked={formData.status}
-                                onChange={e => changeData('status', e.target.checked)}
+                            <label>Orari Disponibili</label>
+                            <select 
+                                required 
+                                value={formData.datetime.split(' ')[1] || ''} 
+                                onChange={e => changeData('datetime', `${formData.datetime.split(' ')[0]} ${e.target.value}`)} 
                                 className="form-control"
-                            />
+                            >
+                                <option value="">Seleziona un orario</option>
+                                {availableSlots.length === 0 && <option disabled>Nessun orario disponibile</option>}
+                                {availableSlots.map(slot => (
+                                    <option key={slot.time} value={slot.time}>{slot.time}</option>
+                                ))}
+                            </select>
                         </div>
                         {bookingError && <div className="alert alert-danger">{bookingError}</div>}
                         {bookingSuccess && <div className="alert alert-success">{bookingSuccess}</div>}

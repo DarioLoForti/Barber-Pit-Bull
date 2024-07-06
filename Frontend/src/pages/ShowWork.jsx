@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import axios from "../utils/axiosClient";
 import { MdDelete, MdEditNote } from "react-icons/md";
-import { useParams } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Work() {
     const { id } = useParams();
     const [work, setWork] = useState(null);
     const [fullscreen, setFullscreen] = useState(false);
-    const [showDeleteConfirm, setShowDeleteConfirm] = useState(false); // Stato per gestire la visualizzazione del dialogo di conferma
+
+    // State per mostrare l'alert
+    const [showAlert, setShowAlert] = useState(false);
 
     const fetchWork = async () => {
         try {
@@ -43,17 +45,25 @@ export default function Work() {
     };
 
     const handleDeleteClick = () => {
-        setShowDeleteConfirm(true); // Mostra il dialogo di conferma prima di eliminare
+        console.log("Delete button clicked");
+        // Impostiamo showAlert a true invece di setShowDeleteConfirm(true)
+        setShowAlert(true);
     };
 
     const confirmDelete = async () => {
-        await deleteWork(work.id);
-        setShowDeleteConfirm(false); // Nasconde il dialogo di conferma dopo aver eliminato
+        if (work) {
+            await deleteWork(work.id);
+        }
+        // Chiudiamo l'alert impostando showAlert a false
+        setShowAlert(false);
     };
 
     const cancelDelete = () => {
-        setShowDeleteConfirm(false); // Nasconde il dialogo di conferma senza eliminare
+        // Chiudiamo l'alert impostando showAlert a false
+        setShowAlert(false);
     };
+
+    const { isAdminIn } = useAuth();
 
     return (
         <>
@@ -63,20 +73,33 @@ export default function Work() {
                 <div className="container">
                     <div className="row">
                         <div className="col-12">
+                        {showAlert && (
+                        <div className="alert">
+                            <p>Sei sicuro di voler eliminare questo lavoro?</p>
+                            <button onClick={confirmDelete}>Conferma</button>
+                            <button onClick={cancelDelete}>Annulla</button>
+                        </div>
+                    )}
+                        </div>
+                        <div className="col-12">
                             <div className="work">
                                 <div className="back">
-                                <button onClick={handleBack}>Back</button>
+                                    <button onClick={handleBack}>Back</button>
                                 </div>
                                 <div className="card-work">
-                                    <div className="top-card">
-                                        <h4>
-                                            <Link to={`/works/${id}/edit`}>
-                                                Modifica <MdEditNote />
-                                            </Link>
-                                        </h4>
-                                        <h4 onClick={handleDeleteClick}>Elimina <MdDelete /></h4>
-                                    </div>
-                                    {/* Gestione dell'immagine a schermo intero */}
+                                    {isAdminIn && (
+                                        <div className="top-card">
+                                            <h4>
+                                                <Link to={`/works/${id}/edit`}>
+                                                    Modifica <MdEditNote />
+                                                </Link>
+                                            </h4>
+                                            {/* Cambiamo l'evento onClick */}
+                                            <h4 onClick={handleDeleteClick}>
+                                                Elimina <MdDelete />
+                                            </h4>
+                                        </div>
+                                    )}
                                     {fullscreen && (
                                         <div className="fullscreen-overlay" onClick={toggleFullscreen}>
                                             <img src={work.imageWork} alt={work.name} className="fullscreen-image" />
@@ -89,20 +112,11 @@ export default function Work() {
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
-                </div>
-            )}
 
-            {/* Componente del dialogo di conferma */}
-            {showDeleteConfirm && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <p>Sei sicuro di voler eliminare questa foto?</p>
-                        <div className="btn"> 
-                            <button onClick={confirmDelete}>Conferma</button>
-                            <button onClick={cancelDelete}>Annulla</button>
-                        </div>
-                    </div>
+                    {/* Utilizziamo un alert anziché la modale */}
+                    
                 </div>
             )}
         </>
