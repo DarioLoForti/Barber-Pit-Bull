@@ -181,38 +181,48 @@ const getAvailability = async (req, res) => {
     const appointments = await prisma.appointment.findMany({
       where: {
         datetime: {
-          gte: new Date(parsedDate.setHours(9, 0, 0, 0)),
+          gte: new Date(parsedDate.setHours(8, 0, 0, 0)),
           lt: new Date(parsedDate.setHours(20, 0, 0, 0)),
         },
       },
     });
 
     const slots = [];
-    const startHour = 9;
+    const startHour = 8;
     const endHour = 20;
 
-    for (let hour = startHour; hour <= endHour; hour++) {
-      const slotEnd = hour + serviceDuration / 60;
-      if (slotEnd <= endHour) {
-        slots.push({
-          time: `${hour}:00`,
-          available: !appointments.some((appt) => {
-            const apptHour = new Date(appt.datetime).getHours();
-            return apptHour >= hour && apptHour < slotEnd;
-          }),
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minute = 0; minute < 60; minute += 15) {
+        const slotStart = moment(parsedDate).hour(hour).minute(minute);
+        const slotEnd = moment(slotStart).add(serviceDuration, "minutes");
+
+        const isSlotAvailable = !appointments.some((appt) => {
+          const apptStart = moment(appt.datetime);
+          const apptEnd = moment(appt.endDateTime);
+          return (
+            slotStart.isBetween(apptStart, apptEnd, null, "[)") ||
+            slotEnd.isBetween(apptStart, apptEnd, null, "(]") ||
+            apptStart.isBetween(slotStart, slotEnd, null, "[)") ||
+            apptEnd.isBetween(slotStart, slotEnd, null, "(]")
+          );
         });
+
+        if (isSlotAvailable) {
+          slots.push({
+            time: slotStart.format("HH:mm"),
+            available: true,
+          });
+        }
       }
     }
 
     res.json({ slots });
   } catch (err) {
     console.error("Errore nella ricerca della disponibilità:", err);
-    res
-      .status(500)
-      .json({
-        error:
-          "Si è verificato un errore durante la ricerca della disponibilità.",
-      });
+    res.status(500).json({
+      error:
+        "Si è verificato un errore durante la ricerca della disponibilità.",
+    });
   }
 };
 

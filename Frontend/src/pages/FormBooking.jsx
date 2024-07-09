@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../utils/axiosClient';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Booking() {
     const initialData = {
@@ -42,8 +42,7 @@ export default function Booking() {
                 console.log('Fetching available slots for date:', date, 'and duration:', duration);
                 const { data } = await axios.get(`/appointments/availability?date=${date}&duration=${duration}`);
                 console.log('Slot disponibili:', data.slots);
-                const filteredSlots = data.slots.filter(slot => slot.available);
-                setAvailableSlots(filteredSlots);
+                setAvailableSlots(data.slots);
             } catch (err) {
                 console.error('Errore nel recuperare le fasce orarie disponibili:', err);
             }
@@ -56,13 +55,10 @@ export default function Booking() {
     }, [formData.datetime, totalDuration]);
 
     const changeData = (key, value) => {
-        setFormData(curr => {
-            console.log(`Updating ${key} to ${value}`);
-            return {
-                ...curr,
-                [key]: value
-            };
-        });
+        setFormData(curr => ({
+            ...curr,
+            [key]: value
+        }));
     };
 
     const handleServiceChange = (serviceId) => {

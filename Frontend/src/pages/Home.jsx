@@ -72,7 +72,7 @@ export default function Home() {
                         <p>Il mio nome è Daniele Mogavero, sono un barbiere professionista con esperienza pluriennale.</p>
                         <p>Il mio obiettivo è quello di offrire un servizio di qualità e soddisfare le esigenze dei miei clienti.</p>
                         <p>Il mio salone si trova a Collesano, in provincia di Palermo, in Via Vincenzo Florio n. 23.</p>
-                        <p>Per prenotare un appuntamento, contattami al numero <a href="https://wa.me/393331234567" target="_blank" rel="noopener noreferrer">+39 333 1234567</a>.</p>
+                        <p>Per prenotare un appuntamento, contattami al numero <a href="https://wa.me/393290956817" target="_blank" rel="noopener noreferrer">+39 3290956817</a>.</p>
                         <p>Per ulteriori informazioni, visita il mio profilo Instagram <a href="https://www.instagram.com/barber_pit_bull/" target="_blank" rel="noopener noreferrer">Barber_Pit-bull</a>.</p>
                         <p>Il mio salone è aperto dal lunedì al sabato, dalle 8:00 alle 20:00.</p>
                         <p>Vi aspetto per offrirvi un servizio di qualità e per farvi vivere un'esperienza unica.</p>
@@ -83,7 +83,7 @@ export default function Home() {
 
                     </div>
                     <div className="col-7">
-                        <h2>La mia esperienza a Sanremo</h2>
+                        <h2 className="mb-5">La mia esperienza a Sanremo</h2>
                         <p>
                         Ciao a tutti! Sono Daniele Mogavero, parrucchiere e stilista originario di Collesano. <br />
                         Recentemente ho avuto l'opportunità incredibile di vivere un'esperienza indimenticabile al Festival di Sanremo.Grazie alla magia di Internet, ho avuto modo di far conoscere il mio lavoro attraverso il gruppo "United Barber Sicilian", fondato da Pietro Panzarella. Con oltre 1300 membri, questo gruppo mi ha permesso di mettermi in mostra professionalmente e di essere notato dagli addetti ai lavori del mondo della moda e dello spettacolo. <br />
@@ -136,7 +136,7 @@ export default function Home() {
                             <h2>Barber Style</h2>
                             <h3>Daniele Mogavero</h3>
                             <h5><a href="https://www.google.com/maps/search/?api=1&query=Via+Vincenzo+Florio,+23,+90016+Collesano+PA" target="_blank" rel="noopener noreferrer">Via Vincenzo Florio, n 23, <br /> 90016 Collesano PA</a></h5>
-                            <p>WhatsApp: <a href="https://wa.me/393331234567" target="_blank" rel="noopener noreferrer">+39 333 1234567</a></p>
+                            <p>WhatsApp: <a href="https://wa.me/393331234567" target="_blank" rel="noopener noreferrer">+39 3290956817</a></p>
                             <p>Email: <a href="mailto:danielemogavero@gmail.com">danielemogavero@gmail.com</a></p>
                             <p>P.IVA: 03428974235t98</p>
                             <p><FaInstagram /> <a href="https://www.instagram.com/barber_pit_bull/" target="_blank" rel="noopener noreferrer">Barber_Pit-bull</a></p>

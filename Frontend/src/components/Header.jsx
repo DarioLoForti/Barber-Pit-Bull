@@ -11,12 +11,12 @@ const urlPages = [
         href: '/works'
     },
     {
-        label: 'Prenotati',
-        href: '/form-booking'
-    },
-    {
         label: 'Attestati',
         href: '/certificates'
+    },
+    {
+        label: 'Prenotati',
+        href: '/form-booking'
     }
 ];
 
@@ -56,6 +56,7 @@ export default function Header() {
                                         </button>
                                         <ul className="dropdown-menu">
                                             <li><NavLink className="dropdown-item" to="/login">Login</NavLink></li>
+                                            <li><NavLink className="dropdown-item" to="/register">Register</NavLink></li>
                                         </ul>
                                     </div>
                                 )}
