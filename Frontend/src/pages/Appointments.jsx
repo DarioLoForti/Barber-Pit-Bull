@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../utils/axiosClient';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -6,15 +6,16 @@ export default function Appointments() {
     const { isLoggedIn, user } = useAuth();
     const [appointments, setAppointments] = useState(null);
     const [date, setDate] = useState(null);
-    const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+    const [selectedTime, setSelectedTime] = useState(null); // Stato per memorizzare l'ora selezionata
 
     const fetchAppointments = async () => {
-        const { data: array } = await axios.get(`/admin/appointments?date=${date}`);
+        // Seleziona l'ora e la data per la chiamata API
+        const datetime = new Date(`${date}T${selectedTime}`);
+        const { data: array } = await axios.get(`/admin/appointments?datetime=${datetime.toISOString()}`);
         const formattedAppointments = array.data.map((appointment) => ({
             ...appointment,
             formattedDatetime: formatDatetime(appointment.datetime),
         }));
-        // Ordina gli appuntamenti in ordine cronologico per orario
         formattedAppointments.sort((a, b) => {
             const timeA = new Date(a.datetime).getTime();
             const timeB = new Date(b.datetime).getTime();
@@ -38,10 +39,10 @@ export default function Appointments() {
     };
 
     useEffect(() => {
-        if (date) {
+        if (date && selectedTime) {
             fetchAppointments();
         }
-    }, [date]);
+    }, [date, selectedTime]);
 
     return (
         <>
@@ -52,13 +53,24 @@ export default function Appointments() {
                             <h1 className="text-center mb-4">Appuntamenti</h1>
                         </div>
                     </div>
-                    <div className="col-2">
-                        <input
-                            type="date"
-                            value={date}
-                            onChange={(e) => setDate(e.target.value)}
-                            className="form-control mb-4"
-                        />
+                    <div className="row">
+                        <div className="col-2">
+                            <input
+                                type="date"
+                                value={date}
+                                onChange={(e) => setDate(e.target.value)}
+                                className="form-control mb-4"
+                            />
+                        </div>
+                        {/* Inserimento ora */}
+                        <div className="col-2">
+                            <input
+                                type="time"
+                                value={selectedTime}
+                                onChange={(e) => setSelectedTime(e.target.value)}
+                                className="form-control mb-4"
+                            />
+                        </div>
                     </div>
                     <div className="row">
                         {appointments ? (
@@ -102,7 +114,9 @@ export default function Appointments() {
                         ) : (
                             <p>Loading appointments...</p>
                         )}
-                        <div className="col-12 mt-5">
+                    </div>
+                    <div className="row mt-5">
+                        <div className="col-12">
                             <div className="back">
                                 <button onClick={handleBack}>Back</button>
                             </div>

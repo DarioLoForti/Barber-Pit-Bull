@@ -56,10 +56,13 @@ export default function Booking() {
     }, [formData.datetime, totalDuration]);
 
     const changeData = (key, value) => {
-        setFormData(curr => ({
-            ...curr,
-            [key]: value
-        }));
+        setFormData(curr => {
+            console.log(`Updating ${key} to ${value}`);
+            return {
+                ...curr,
+                [key]: value
+            };
+        });
     };
 
     const handleServiceChange = (serviceId) => {
@@ -71,6 +74,9 @@ export default function Booking() {
             const newTotalDuration = newServices.reduce((total, id) => total + (serviceDurations[id] || 0), 0);
             setTotalDuration(newTotalDuration);
 
+            console.log('Updated services:', newServices);
+            console.log('Updated total duration:', newTotalDuration);
+
             return {
                 ...curr,
                 services: newServices,
@@ -78,10 +84,21 @@ export default function Booking() {
         });
     };
 
+    const formatDatetime = (datetime) => {
+        const [datePart, timePart] = datetime.split('T');
+        const [year, month, day] = datePart.split('-');
+        return `${day}/${month}/${year} ${timePart}`;
+    };
+
     const handleSubmit = async e => {
         e.preventDefault();
+        const formattedData = {
+            ...formData,
+            datetime: formatDatetime(formData.datetime),
+        };
+        console.log('Submitting form with data:', formattedData);
         try {
-            await axios.post('/appointments', formData);
+            await axios.post('/appointments', formattedData);
             setFormData(initialData);
             setBookingSuccess('Prenotazione effettuata con successo!');
             setBookingError(null);
@@ -89,6 +106,7 @@ export default function Booking() {
         } catch (err) {
             setBookingError(err.response.data.error || 'Errore durante la prenotazione');
             setBookingSuccess(null);
+            console.error('Errore nella richiesta di prenotazione:', err.response.data);
         }
     };
 
@@ -132,8 +150,13 @@ export default function Booking() {
                             <label>Orari Disponibili</label>
                             <select 
                                 required 
-                                value={formData.datetime.split(' ')[1] || ''} 
-                                onChange={e => changeData('datetime', `${formData.datetime.split(' ')[0]} ${e.target.value}`)} 
+                                value={formData.datetime.split('T')[1] || ''} 
+                                onChange={e => {
+                                    const datePart = formData.datetime.split('T')[0];
+                                    const timePart = e.target.value;
+                                    const newDatetime = `${datePart}T${timePart}`;
+                                    changeData('datetime', newDatetime);
+                                }} 
                                 className="form-control"
                             >
                                 <option value="">Seleziona un orario</option>
