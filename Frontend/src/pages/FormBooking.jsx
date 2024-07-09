@@ -88,6 +88,15 @@ export default function Booking() {
 
     const handleSubmit = async e => {
         e.preventDefault();
+        const currentDateTime = new Date();
+        const selectedDateTime = new Date(formData.datetime);
+
+        if (selectedDateTime < currentDateTime) {
+            setBookingError('Non è possibile prenotare una data passata.');
+            setBookingSuccess(null);
+            return;
+        }
+
         const formattedData = {
             ...formData,
             datetime: formatDatetime(formData.datetime),
@@ -187,6 +196,8 @@ export default function Booking() {
         );
     };
 
+    const minDate = new Date().toISOString().slice(0, 16);
+
     return (
         <div className="container">
             <div className="row">
@@ -199,6 +210,7 @@ export default function Booking() {
                                 type="datetime-local" 
                                 required 
                                 value={formData.datetime} 
+                                min={minDate}
                                 onChange={e => changeData('datetime', e.target.value)} 
                                 className="form-control"
                             />

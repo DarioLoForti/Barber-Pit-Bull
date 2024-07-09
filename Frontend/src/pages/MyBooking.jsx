@@ -37,6 +37,11 @@ export default function MyBookings() {
 
     const filteredAndSortedBookings = filterAndSortBookingsByCurrentMonth();
 
+    const isPastBooking = (bookingDate) => {
+        const currentDate = new Date();
+        return new Date(bookingDate) < currentDate;
+    };
+
     return (
         <div className="container">
             <div className="row">
@@ -45,7 +50,10 @@ export default function MyBookings() {
                     <h1 className="text-center mb-4">Le Mie Prenotazioni di Questo Mese</h1>
                     {filteredAndSortedBookings.length > 0 ? (
                         filteredAndSortedBookings.map((booking) => (
-                            <div key={booking.id} className="card mb-3">
+                            <div 
+                                key={booking.id} 
+                                className={`card mb-3 ${isPastBooking(booking.datetime) ? 'past-booking' : ''}`}
+                            >
                                 <div className="card-body">
                                     <h5 className="card-title">Servizi: {booking.services.map(service => service.name).join(', ')}</h5>
                                     <p className="card-text">Data e Orario: {new Date(booking.datetime).toLocaleString()}</p>
