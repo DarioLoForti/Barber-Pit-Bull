@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import axios from '../utils/axiosClient';
 import { useAuth } from '../contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export default function Appointments() {
     const { isLoggedIn, user } = useAuth();
     const [appointments, setAppointments] = useState(null);
-    const [date, setDate] = useState(null);
-    const [selectedTime, setSelectedTime] = useState(null); // Stato per memorizzare l'ora selezionata
+    const [date, setDate] = useState('');
+    const navigate = useNavigate();
 
     const fetchAppointments = async () => {
-        // Seleziona l'ora e la data per la chiamata API
-        const datetime = new Date(`${date}T${selectedTime}`);
-        const { data: array } = await axios.get(`/admin/appointments?datetime=${datetime.toISOString()}`);
-        const formattedAppointments = array.data.map((appointment) => ({
-            ...appointment,
-            formattedDatetime: formatDatetime(appointment.datetime),
-        }));
-        formattedAppointments.sort((a, b) => {
-            const timeA = new Date(a.datetime).getTime();
-            const timeB = new Date(b.datetime).getTime();
-            return timeA - timeB;
-        });
-        setAppointments(formattedAppointments);
+        // Formattare la data nel modo richiesto (yyyy-mm-dd)
+        const formattedDate = new Date(date).toISOString().split('T')[0];
+        try {
+            const { data: array } = await axios.get(`/admin/appointments?date=${formattedDate}`);
+            const formattedAppointments = array.data.map((appointment) => ({
+                ...appointment,
+                formattedDatetime: formatDatetime(appointment.datetime),
+            }));
+            formattedAppointments.sort((a, b) => {
+                const timeA = new Date(a.datetime).getTime();
+                const timeB = new Date(b.datetime).getTime();
+                return timeA - timeB;
+            });
+            setAppointments(formattedAppointments);
+        } catch (error) {
+            console.error('Error fetching appointments:', error);
+        }
     };
 
     const formatDatetime = (datetime) => {
@@ -39,10 +44,10 @@ export default function Appointments() {
     };
 
     useEffect(() => {
-        if (date && selectedTime) {
+        if (date) {
             fetchAppointments();
         }
-    }, [date, selectedTime]);
+    }, [date]);
 
     return (
         <>
@@ -62,15 +67,6 @@ export default function Appointments() {
                                 className="form-control mb-4"
                             />
                         </div>
-                        {/* Inserimento ora */}
-                        <div className="col-2">
-                            <input
-                                type="time"
-                                value={selectedTime}
-                                onChange={(e) => setSelectedTime(e.target.value)}
-                                className="form-control mb-4"
-                            />
-                        </div>
                     </div>
                     <div className="row">
                         {appointments ? (
@@ -80,13 +76,13 @@ export default function Appointments() {
                                         <h3>{a.formattedDatetime}</h3>
                                         <div className="card-body">
                                             <h5 className="card-title">
-                                                {a.user.name}
-                                            </h5>
-                                            <h5 className="card-title">
-                                                {a.user.surname}
+                                                {a.user.name} {a.user.surname}
                                             </h5>
                                             <p className="card-text">
-                                                {a.user.phone}
+                                                Tel: <a href={`tel:${a.user.phone}`}>{a.user.phone}</a>
+                                            </p>
+                                            <p className="card-text">
+                                                Email: <a href={`mailto:${a.user.email}`}>{a.user.email}</a>
                                             </p>
                                         </div>
                                         <div className="card-body">
