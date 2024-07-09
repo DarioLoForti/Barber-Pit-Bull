@@ -5,7 +5,7 @@ export default function ({initialData, onSubmit}) {
 
     const defaultData = initialData || {
         name: '',
-        imagework: '',
+        imageWork: '',
     }
 
 

@@ -20,7 +20,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import MyBooking from './pages/MyBooking';
 import FormBooking from './pages/FormBooking';
-
+// import EditAdmin from "./pages/EditAdmin";
 // import AddMessage from "./pages/AddMessage";
 // import Messages from "./pages/Messages";
 
@@ -85,6 +85,7 @@ export default function(){
                     }>
                       {/* <Route path="messages" element={<Messages/>}/> */}
                         <Route path="dashboardAdmin" element={<DashboardAdmin />} />
+                        {/* <Route path="admin/:id/modify" element={<EditAdmin />} /> */}
                         <Route path="users" element={<Users />} />
                         <Route path="appointments" element={<Appointments />} />
                         <Route path="add-work" element={<AddWork />} />
