@@ -196,14 +196,13 @@ const getAvailability = async (req, res) => {
         const slotStart = moment(parsedDate).hour(hour).minute(minute);
         const slotEnd = moment(slotStart).add(serviceDuration, "minutes");
 
-        const isSlotAvailable = !appointments.some((appt) => {
+        // Verifica se lo slot è disponibile controllando gli appuntamenti
+        const isSlotAvailable = appointments.every((appt) => {
           const apptStart = moment(appt.datetime);
           const apptEnd = moment(appt.endDateTime);
           return (
-            slotStart.isBetween(apptStart, apptEnd, null, "[)") ||
-            slotEnd.isBetween(apptStart, apptEnd, null, "(]") ||
-            apptStart.isBetween(slotStart, slotEnd, null, "[)") ||
-            apptEnd.isBetween(slotStart, slotEnd, null, "(]")
+            slotEnd.isSameOrBefore(apptStart, "minute") ||
+            slotStart.isSameOrAfter(apptEnd, "minute")
           );
         });
 
