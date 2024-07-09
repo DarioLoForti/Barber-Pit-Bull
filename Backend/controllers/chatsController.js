@@ -19,6 +19,10 @@ const sendMessage = async (req, res) => {
   try {
     const { appointmentId, sender, message } = req.body;
 
+    if (!appointmentId || !sender || !message) {
+      return res.status(400).json({ error: "Tutti i campi sono obbligatori." });
+    }
+
     // Verifica se l'appuntamento con l'ID specificato esiste nel database
     const existingAppointment = await prisma.appointment.findUnique({
       where: { id: parseInt(appointmentId) },
@@ -46,6 +50,7 @@ const sendMessage = async (req, res) => {
     res.status(500).json({ error: "Errore nell'invio del messaggio." });
   }
 };
+
 module.exports = {
   getMessages,
   sendMessage,

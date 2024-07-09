@@ -19,18 +19,23 @@ export default function MyBookings() {
         fetchBookings();
     }, []);
 
-    // Filtra le prenotazioni per il mese corrente
-    const filterBookingsByCurrentMonth = () => {
+    // Filtra le prenotazioni per il mese corrente e le ordina per data e ora
+    const filterAndSortBookingsByCurrentMonth = () => {
         if (!bookings) return [];
         
         const currentMonth = new Date().getMonth() + 1; // Month is zero-indexed, so add 1
-        return bookings.filter(booking => {
+        const filteredBookings = bookings.filter(booking => {
             const bookingMonth = new Date(booking.datetime).getMonth() + 1;
             return bookingMonth === currentMonth;
         });
+
+        // Ordina le prenotazioni per data e ora
+        filteredBookings.sort((a, b) => new Date(a.datetime) - new Date(b.datetime));
+
+        return filteredBookings;
     };
 
-    const filteredBookings = filterBookingsByCurrentMonth();
+    const filteredAndSortedBookings = filterAndSortBookingsByCurrentMonth();
 
     return (
         <div className="container">
@@ -38,8 +43,8 @@ export default function MyBookings() {
                 <div className="col-3"></div>
                 <div className="col-6">
                     <h1 className="text-center mb-4">Le Mie Prenotazioni di Questo Mese</h1>
-                    {filteredBookings.length > 0 ? (
-                        filteredBookings.map((booking) => (
+                    {filteredAndSortedBookings.length > 0 ? (
+                        filteredAndSortedBookings.map((booking) => (
                             <div key={booking.id} className="card mb-3">
                                 <div className="card-body">
                                     <h5 className="card-title">Servizi: {booking.services.map(service => service.name).join(', ')}</h5>

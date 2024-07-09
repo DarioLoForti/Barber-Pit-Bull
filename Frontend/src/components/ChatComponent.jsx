@@ -1,78 +1,68 @@
-// src/components/ChatComponent.jsx
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import io from 'socket.io-client';
 
-const ChatComponent = ({ appointmentId }) => {
-    const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState('');
+const socket = io('http://localhost:3000'); // Assicurati che l'URL sia corretto
 
-    // Connessione al server di Socket.IO
-    const socket = io('http://localhost:3000/');
+const Chat = ({ user }) => {
+    const [message, setMessage] = useState('');
+    const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        // Ricevi i messaggi esistenti quando il componente viene montato
-        fetchMessages();
-
-        // Unisciti alla stanza di chat specifica
+        // Connetti alla stanza dell'utente (o un'altra logica di stanza)
+        const appointmentId = '1'; // Sostituisci con l'ID reale dell'appuntamento
         socket.emit('joinRoom', { appointmentId });
 
-        // Ascolta per i nuovi messaggi inviati
-        socket.on('newMessage', (message) => {
-            setMessages([...messages, message]);
+        // Ricevi nuovi messaggi
+        socket.on('newMessage', (newMessage) => {
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
         });
 
+        // Cleanup
         return () => {
-            socket.disconnect();
+            socket.off('newMessage');
         };
     }, []);
 
-    // Funzione per recuperare i messaggi esistenti
-    const fetchMessages = async () => {
-        try {
-            const response = await axios.get(`/chat/messages/${appointmentId}`);
-            setMessages(response.data);
-        } catch (error) {
-            console.error('Errore nel recupero dei messaggi:', error);
-        }
-    };
+    const sendMessage = () => {
+        const newMessage = {
+            appointmentId: '1', // Sostituisci con l'ID reale dell'appuntamento
+            sender: user || 'admin', // Utilizza il mittente passato come prop o 'admin' come fallback
+            message: message,
+        };
 
-    // Funzione per inviare un nuovo messaggio
-    const sendMessage = async () => {
-        try {
-            const sender = 'Client'; // Puoi personalizzare il mittente come desideri
-            const response = await axios.post('/chat/messages', {
-                appointmentId,
-                sender,
-                message: newMessage,
-            });
-            setNewMessage('');
-        } catch (error) {
-            console.error('Errore nell\'invio del messaggio:', error);
-        }
+        socket.emit('sendMessage', newMessage);
+        setMessage('');
     };
 
     return (
-        <div className="chat-component">
-            <h2>Chat</h2>
-            <div className="messages-container">
-                {messages.map((msg) => (
-                    <div key={msg.id} className="message">
-                        <strong>{msg.sender}: </strong>
-                        <span>{msg.message}</span>
+
+        <div className="container">
+            <div className="row">
+                <div className="col-12">
+                    <div className="chat">
+                        <div className="chat-messages">
+                            {messages.map((msg) => (
+                                <div key={msg.id} className={`message ${msg.sender === 'admin' ? 'admin' : 'user'}`}>
+                                    <p>{msg.message}</p>
+                                    <span>{new Date(msg.timestamp).toLocaleTimeString()}</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="chat-input">
+                            <input
+                                type="text"
+                                placeholder="Scrivi un messaggio..."
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            />
+                            <button onClick={sendMessage}>Invia</button>
+                        </div>
                     </div>
-                ))}
-            </div>
-            <div className="new-message-container">
-                <textarea
-                    value={newMessage}
-                    onChange={(e) => setNewMessage(e.target.value)}
-                    placeholder="Scrivi un messaggio..."
-                ></textarea>
-                <button onClick={sendMessage}>Invia</button>
+
+                </div>
             </div>
         </div>
     );
 };
 
-export default ChatComponent;
+export default Chat;
