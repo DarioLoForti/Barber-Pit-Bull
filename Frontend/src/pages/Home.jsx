@@ -59,14 +59,50 @@ export default function Home() {
                     </div>
                 </div>
             </div>
+            <div className="container">
+                <div className="row my-5">
+                    <div className="col-2">
+
+                    </div>
+                    <div className="col-4 mt-3">
+                        <img src="../../public/profile/profilo.jpg" alt="" />
+                    </div>
+                    <div className="col-6">
+                        <h2 className="mb-5">Barber Style</h2>
+                        <p>Il mio nome è Daniele Mogavero, sono un barbiere professionista con esperienza pluriennale.</p>
+                        <p>Il mio obiettivo è quello di offrire un servizio di qualità e soddisfare le esigenze dei miei clienti.</p>
+                        <p>Il mio salone si trova a Collesano, in provincia di Palermo, in Via Vincenzo Florio n. 23.</p>
+                        <p>Per prenotare un appuntamento, contattami al numero <a href="https://wa.me/393331234567" target="_blank" rel="noopener noreferrer">+39 333 1234567</a>.</p>
+                        <p>Per ulteriori informazioni, visita il mio profilo Instagram <a href="https://www.instagram.com/barber_pit_bull/" target="_blank" rel="noopener noreferrer">Barber_Pit-bull</a>.</p>
+                        <p>Il mio salone è aperto dal lunedì al sabato, dalle 8:00 alle 20:00.</p>
+                        <p>Vi aspetto per offrirvi un servizio di qualità e per farvi vivere un'esperienza unica.</p>
+                    </div>
+                </div>
+                <div className="row my-5">
+                    <div className="col-1">
+
+                    </div>
+                    <div className="col-7">
+                        <h2>La mia esperienza a Sanremo</h2>
+                        <p>
+                        Ciao a tutti! Sono Daniele Mogavero, parrucchiere e stilista originario di Collesano. <br />
+                        Recentemente ho avuto l'opportunità incredibile di vivere un'esperienza indimenticabile al Festival di Sanremo.Grazie alla magia di Internet, ho avuto modo di far conoscere il mio lavoro attraverso il gruppo "United Barber Sicilian", fondato da Pietro Panzarella. Con oltre 1300 membri, questo gruppo mi ha permesso di mettermi in mostra professionalmente e di essere notato dagli addetti ai lavori del mondo della moda e dello spettacolo. <br />
+                        È stato un onore far parte di una squadra di stilisti che ha curato il look dei protagonisti del 67° Festival della canzone italiana. Da Gratteri all'Ariston e poi di nuovo a casa nel mio salone madonita a Collesano, questa esperienza mi ha arricchito umanamente e professionalmente, permettendomi di vivere la passione per il mio mestiere al massimo livello.Grazie a tutti voi che mi avete sostenuto e creduto in me. <br /> Continuerò a portare avanti la mia arte con passione e dedizione, sperando di poter ancora stupire e ispirare con i miei lavori.
+                        </p>
+                    </div>
+                    <div className="col-4 mt-3">
+                        <img src="../../public/profile/Danile-Mogavero.jpg" alt="" />
+                    </div>
+                </div>
+            </div>
             <div className="container-fluid">
                 <div className="raw">
                     <div className="col-12">
-                        <h3 className="text-center my-4">Recensioni</h3>
+                        <h3 className="text-center my-2">Recensioni</h3>
                     </div>
                 </div>
                 {isLoggedIn &&
-                    <div className="row my-5">
+                    <div className="row my-3">
                         <div className="home-review">
                             <div className="col-6">
                                 {reviews ? <Slider reviews={reviews} /> : <p>Loading reviews...</p>}

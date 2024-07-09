@@ -21,7 +21,7 @@ const MapComponent = () => {
   const tomtomApiKey = 'UMV1Glp9BfPiNdAdY3h7MkpPD5yBDFrC';
 
   return (
-    <MapContainer center={center} zoom={15} style={{ height: "300px", width: "80%" }}>
+    <MapContainer center={center} zoom={15} style={{ height: "400px", width: "100%" }}>
       <TileLayer
         url={`https://api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?key=${tomtomApiKey}`}
         attribution='&copy; <a href="https://developer.tomtom.com">TomTom</a> contributors'

@@ -57,7 +57,7 @@ export default function(){
                                     <div className="card-body">
                                         <h5 className="card-title">{certificate.name}</h5>
                                         <p className="card-text">{certificate.description}</p>
-                                        <Link to={`/certificates/${certificate.id}`} className="btn btn-secondary">Vedi dettagli</Link>
+                                        {/* <Link to={`/certificates/${certificate.id}`} className="btn btn-secondary">Vedi dettagli</Link> */}
                                     </div>
                             </div>
                        
