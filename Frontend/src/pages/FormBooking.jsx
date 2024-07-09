@@ -106,6 +106,87 @@ export default function Booking() {
         }
     };
 
+    const renderSlots = () => {
+        if (availableSlots.length === 0) {
+            return (
+                <tr>
+                    <td colSpan="2" className="text-center">Nessun orario disponibile</td>
+                </tr>
+            );
+        }
+
+        const midIndex = Math.ceil(availableSlots.length / 2);
+        const firstHalf = availableSlots.slice(0, midIndex);
+        const secondHalf = availableSlots.slice(midIndex);
+
+        return (
+            <div className="row">
+                <div className="col-6 table-responsive">
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Orario</th>
+                                <th>Seleziona</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {firstHalf.map(slot => (
+                                <tr key={slot.time}>
+                                    <td>{slot.time}</td>
+                                    <td>
+                                        <input
+                                            type="radio"
+                                            name="selectedTime"
+                                            value={slot.time}
+                                            checked={formData.datetime.split('T')[1] === slot.time}
+                                            onChange={e => {
+                                                const datePart = formData.datetime.split('T')[0];
+                                                const timePart = e.target.value;
+                                                const newDatetime = `${datePart}T${timePart}`;
+                                                changeData('datetime', newDatetime);
+                                            }}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="col-6 table-responsive">
+                    <table className="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Orario</th>
+                                <th>Seleziona</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {secondHalf.map(slot => (
+                                <tr key={slot.time}>
+                                    <td>{slot.time}</td>
+                                    <td>
+                                        <input
+                                            type="radio"
+                                            name="selectedTime"
+                                            value={slot.time}
+                                            checked={formData.datetime.split('T')[1] === slot.time}
+                                            onChange={e => {
+                                                const datePart = formData.datetime.split('T')[0];
+                                                const timePart = e.target.value;
+                                                const newDatetime = `${datePart}T${timePart}`;
+                                                changeData('datetime', newDatetime);
+                                            }}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <div className="container">
             <div className="row">
@@ -144,23 +225,9 @@ export default function Booking() {
                         </div>
                         <div className="form-group">
                             <label>Orari Disponibili</label>
-                            <select 
-                                required 
-                                value={formData.datetime.split('T')[1] || ''} 
-                                onChange={e => {
-                                    const datePart = formData.datetime.split('T')[0];
-                                    const timePart = e.target.value;
-                                    const newDatetime = `${datePart}T${timePart}`;
-                                    changeData('datetime', newDatetime);
-                                }} 
-                                className="form-control"
-                            >
-                                <option value="">Seleziona un orario</option>
-                                {availableSlots.length === 0 && <option disabled>Nessun orario disponibile</option>}
-                                {availableSlots.map(slot => (
-                                    <option key={slot.time} value={slot.time}>{slot.time}</option>
-                                ))}
-                            </select>
+                            <div>
+                                {renderSlots()}
+                            </div>
                         </div>
                         {bookingError && <div className="alert alert-danger">{bookingError}</div>}
                         {bookingSuccess && <div className="alert alert-success">{bookingSuccess}</div>}
