@@ -59,6 +59,7 @@ export default function Appointments() {
                         </div>
                     </div>
                     <div className="row">
+                        <div className="col-5"></div>
                         <div className="col-2">
                             <input
                                 type="date"
@@ -101,14 +102,14 @@ export default function Appointments() {
                                                     </div>
                                                 ))
                                             ) : (
-                                                <p>Loading services...</p>
+                                                <span class="loader"></span>
                                             )}
                                         </div>
                                     </div>
                                 </div>
                             ))
                         ) : (
-                            <p>Loading appointments...</p>
+                            <span class="loader"></span>
                         )}
                     </div>
                     <div className="row mt-5">

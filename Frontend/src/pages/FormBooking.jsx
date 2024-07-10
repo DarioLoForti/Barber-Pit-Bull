@@ -199,52 +199,54 @@ export default function Booking() {
     const minDate = new Date().toISOString().slice(0, 16);
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    <h1 className="text-center mb-5">Prenota un Servizio</h1>
-                    <form onSubmit={handleSubmit}>
-                        <div className="form-group">
-                            <label>Data e Orario</label>
-                            <input 
-                                type="datetime-local" 
-                                required 
-                                value={formData.datetime} 
-                                min={minDate}
-                                onChange={e => changeData('datetime', e.target.value)} 
-                                className="form-control"
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label>Servizi</label>
-                            <div>
-                                {services.map(service => (
-                                    <div key={service.id} className="form-check">
-                                        <input
-                                            type="checkbox"
-                                            id={`service-${service.id}`}
-                                            value={service.id}
-                                            checked={formData.services.includes(service.id)}
-                                            onChange={() => handleServiceChange(service.id)}
-                                            className="form-check-input"
-                                        />
-                                        <label htmlFor={`service-${service.id}`} className="form-check-label">
-                                            {service.name} (Durata: {service.duration} minuti)
-                                        </label>
-                                    </div>
-                                ))}
+        <div className="background">
+            <div className="container">
+                <div className="row">
+                    <div className="col-12">
+                        <h1 className="text-center mb-5">Prenota un Servizio</h1>
+                        <form onSubmit={handleSubmit}>
+                            <div className="form-group">
+                                <label>Data e Orario</label>
+                                <input 
+                                    type="datetime-local" 
+                                    required 
+                                    value={formData.datetime} 
+                                    min={minDate}
+                                    onChange={e => changeData('datetime', e.target.value)} 
+                                    className="form-control"
+                                />
                             </div>
-                        </div>
-                        <div className="form-group">
-                            <label>Orari Disponibili</label>
-                            <div>
-                                {renderSlots()}
+                            <div className="form-group">
+                                <label>Servizi</label>
+                                <div>
+                                    {services.map(service => (
+                                        <div key={service.id} className="form-check">
+                                            <input
+                                                type="checkbox"
+                                                id={`service-${service.id}`}
+                                                value={service.id}
+                                                checked={formData.services.includes(service.id)}
+                                                onChange={() => handleServiceChange(service.id)}
+                                                className="form-check-input"
+                                            />
+                                            <label htmlFor={`service-${service.id}`} className="form-check-label">
+                                                {service.name} (Durata: {service.duration} minuti)
+                                            </label>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                        {bookingError && <div className="alert alert-danger">{bookingError}</div>}
-                        {bookingSuccess && <div className="alert alert-success">{bookingSuccess}</div>}
-                        <button type="submit" className="btn btn-primary">Prenota</button>
-                    </form>
+                            <div className="form-group">
+                                <label>Orari Disponibili</label>
+                                <div>
+                                    {renderSlots()}
+                                </div>
+                            </div>
+                            {bookingError && <div className="alert alert-danger">{bookingError}</div>}
+                            {bookingSuccess && <div className="alert alert-success">{bookingSuccess}</div>}
+                            <button type="submit" className="btn btn-primary">Prenota</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
